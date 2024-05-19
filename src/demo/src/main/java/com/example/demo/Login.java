@@ -36,29 +36,16 @@ public class Login {
         System.out.println("Connected successfully");
         String loginQuery = "SELECT * FROM master.dbo.[user] where username =? and password=?";
         try {
-            System.out.println("1");
             Connection conn = dataSource.getConnection();
-            System.out.println("2");
             PreparedStatement ps = conn.prepareStatement(loginQuery);
-            System.out.println("3");
             ps.setString(1,loginInfo.username);
             ps.setString(2,loginInfo.password);
-            System.out.println("4");
             ResultSet rs = ps.executeQuery();
-            System.out.println("5");
             rs.next();
-            System.out.println(rs.getString("username"));
-            System.out.println("breakpoint");
             if (rs.getString("username") != null && rs.getString("password") != null) {
-                System.out.println("6");
-//                String user_id = rs.getString("user_id");
-                System.out.println("7");
                 ps.close();
-                System.out.println("8");
                 conn.close();
-                System.out.println("9");
                 rs.close();
-                System.out.println("10");
                 return ResponseEntity.status(HttpStatus.OK).body("Login success");
             }
             else

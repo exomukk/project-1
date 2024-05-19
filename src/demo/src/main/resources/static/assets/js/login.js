@@ -1,6 +1,6 @@
-function submitForm() {
-    var username = document.getElementsByClassName("username")[0].value;
-    var password = document.getElementsByClassName("password")[0].value;
+async function submitForm() {
+    const username = document.getElementsByClassName("username")[0].value;
+    const password = document.getElementsByClassName("password")[0].value;
     console.log(username + password);
     const loginInfo = {
         username: username,
@@ -9,26 +9,27 @@ function submitForm() {
 
     console.log(loginInfo);
 
-    fetch('/login.app', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(loginInfo)
-    })
-        .then(response => {
-            if (response.ok) {
-                alert('Đăng nhập thành công! Dữ liệu nhận được: ' + data);
-                return response.text();
-            } else {
-                throw new Error('Error: ' + response.statusText);
-            }
-        })
-        .then(data => {
-            alert('Đăng nhập thành công! Dữ liệu nhận được: ' + data);
-            console.log(data);
-        })
-        .catch(error => console.error('Error:', error));
+    try {
+        const response = await fetch('/login.app', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(loginInfo)
+        });
 
+        console.log('Server response: ', response);
 
+        if (!response.ok) {
+            throw new Error('Something went wrong');
+        }
+
+        const data = await response.json();
+
+        console.log('Đăng nhập thành công! Dữ liệu nhận được: ', data);
+        // Chuyển hướng đến trang homepage.html
+        window.location.href = "homepage.html";
+    } catch (error) {
+        console.error('There has been a problem with your fetch operation: ', error);
+    }
 }
