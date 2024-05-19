@@ -1,0 +1,68 @@
+spring.datasource.url=jdbc:h2:mem:testdb
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=password
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+spring.h2.console.enabled=true
+package com.example.demo;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class LoginApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(LoginApplication.class, args);
+    }
+}
+package com.example.demo;
+
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+@RestController
+public class LoginController {
+    @Autowired
+    private DataSource dataSource;
+
+    @Getter
+    @Setter
+    public static class LoginInfo {
+        private String username;
+        private String password;
+    }
+
+    @PostMapping("/login.app")
+    public ResponseEntity<String> login(@RequestBody LoginInfo loginInfo) {
+        String loginQuery = "SELECT * FROM users WHERE username = ? AND password = ?";
+        try (
+            Connection conn = dataSource.getConnection();
+            PreparedStatement ps = conn.prepareStatement(loginQuery)
+        ) {
+            ps.setString(1, loginInfo.getUsername());
+            ps.setString(2, loginInfo.getPassword());
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next() && rs.getString("username") != null && rs.getString("password") != null) {
+                    return ResponseEntity.status(HttpStatus.OK).body("Login success");
+                } else {
+                    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed, please recheck your credentials");
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Database error: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while processing your request. Please try again later.");
+        }
+    }
