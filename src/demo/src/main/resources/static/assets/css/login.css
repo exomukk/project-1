@@ -24,116 +24,14 @@ body {
     color: #748194;
 }
 
-.container {
-    display: none;
-    position: absolute;
-    width: auto;
-    height: auto;
-    top: calc(50% - 240px);
-    left: calc(40% - 160px);
-    border-radius: 15px 15px 15px 15px;
-}
-
-.c1 {
-    box-shadow: 0 0 10px grey;
-    background-color: white;
-    width: 300px;
-    height: 500px;
-    display: inline-block;
-    border-radius: 15px 15px 15px 15px;
-}
-
-.c11 {
-    background-image: url('https://i.pinimg.com/736x/b8/09/22/b80922f6ea2daaf36a6627378662803b--deck-of-cards-phone-wallpapers.jpg');
-    background-size: 300px 400px;
-    background-repeat: no-repeat;
-    background-color: white;
-    width: 300px;
-    height: 400px;
-    display: inline-block;
-    position: absolute;
-    z-index: 4;
-    border-radius: 15px 15px 200px 200px;
-}
-
-#left,
-#right {
-    color: white;
-    display: inline-block;
-    width: 146px;
-    height: 500px;
-    background-color: white;
-    cursor: pointer;
-}
-
-#left {
-    border-radius: 15px 0px 0px 15px;
-}
-
-#right {
-    border-radius: 15px 15px 15px 0px;
-}
-
-.left_hover {
-    color: #EE9BA3;
-    box-shadow: 5px 0 18px -10px #333;
-    z-index: 1;
-    position: absolute;
-}
-
-.right_hover {
-    box-shadow: -5px 0 15px -10px #333;
-    z-index: 1;
-    position: absolute;
-}
-
-.s1class {
-    color: #748194;
-    position: absolute;
-    bottom: 0;
-    left: 63%;
-    margin-left: -50%;
-}
-
-.s1class span,
-.s2class span {
-    display: block;
-}
-
-.su {
-    font-size: 20px;
-}
-
-.s2class {
-    color: #748194;
-    position: absolute;
-    bottom: 0;
-    right: 63%;
-    margin-right: -50%;
-}
-
-.mainhead {
-    color: white;
-    font-size: 24px;
-    text-align: center;
-    margin-top: 50px;
-}
-
-.mainp {
-    color: white;
-    font-size: 13px;
-    text-align: center;
-    margin-top: 10px;
-}
-
 .c2 {
+    position: relative;
+    top: 5vh;
+    margin: auto;
     background-color: white;
     width: 300px;
     height: 500px;
     border-radius: 15px;
-    position: absolute;
-    left: 370px;
-    display: inline-block;
 }
 
 .username {
@@ -179,9 +77,11 @@ body {
 }
 
 .signup1 {
+    position: relative;
     color: #748194;
     font-size: 30px;
     text-align: center;
+    top: 5vh;
 }
 
 a {
