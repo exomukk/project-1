@@ -11,15 +11,15 @@
 
 <body>
     <div class="c2">
-        <form class="signin">
+        <form class="signin" onsubmit="event.preventDefault(); submitForm();">
             <h1 class="signup1">SIGN IN</h1>
             <br><br><br><br>
             <label>
-                <input name="username" type="text" placeholder="Username*" class="username"/>
-                <input name="password" type="password" placeholder="Password*" class="password"/>
+                <input type="text" placeholder="Username*" class="username" required/>
+                <input type="password" placeholder="Password*" class="password" required/>
             </label>
 
-            <button type="submit" class="btn" onclick="submitForm()">Sumbit</button>
+            <button type="submit" class="btn">Sumbit</button>
 
             <br><br><br><br>
             <a href="register.html">

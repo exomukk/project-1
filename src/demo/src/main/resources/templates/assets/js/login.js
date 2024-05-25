@@ -2,34 +2,26 @@ async function submitForm() {
     const username = document.getElementsByClassName("username")[0].value;
     const password = document.getElementsByClassName("password")[0].value;
     console.log(username + password);
-    const loginInfo = {
-        username: username,
-        password: password
-    };
 
-    console.log(loginInfo);
+    const response = await fetch('/login.app', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username: username, password: password })
+    });
 
-    try {
-        const response = await fetch('/login.app', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(loginInfo)
-        });
-
-        console.log('Server response: ', response);
-
-        if (!response.ok) {
-            throw new Error('Something went wrong');
-        }
-
+    if (response.status === 200) {
         const data = await response.json();
-
-        console.log('Đăng nhập thành công! Dữ liệu nhận được: ', data);
-        // Chuyển hướng đến trang homepage.html
-        window.location.href = "homepage.html";
-    } catch (error) {
-        console.error('There has been a problem with your fetch operation: ', error);
+        // Login thành công, redirect sang index.html
+        console.log(data.message); // In ra thông báo từ server
+        window.location.href = 'index.html';
+    } else {
+        const data = await response.json();
+        // Login thất bại, hiển thị thông báo lỗi
+        alert(data.message);
     }
+
+    console.log(response.status);
+    console.log(response);
 }

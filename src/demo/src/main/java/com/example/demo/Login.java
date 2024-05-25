@@ -16,6 +16,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 
@@ -32,29 +34,25 @@ public class Login {
     }
 
     @PostMapping("/login.app")
-    public ResponseEntity<String> login(@RequestBody loginInfo loginInfo){
+    public ResponseEntity<Map<String, String>> login(@RequestBody loginInfo loginInfo) {
         System.out.println("Connected successfully");
         String loginQuery = "SELECT * FROM master.dbo.[user] where username =? and password=?";
-        try {
-            Connection conn = dataSource.getConnection();
-            PreparedStatement ps = conn.prepareStatement(loginQuery);
-            ps.setString(1,loginInfo.username);
-            ps.setString(2,loginInfo.password);
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(loginQuery)) {
+            ps.setString(1, loginInfo.getUsername());
+            ps.setString(2, loginInfo.getPassword());
             ResultSet rs = ps.executeQuery();
-            rs.next();
-            if (rs.getString("username") != null && rs.getString("password") != null) {
-                ps.close();
-                conn.close();
-                rs.close();
+            boolean isLoginSuccessful = rs.next() && rs.getString("username") != null && rs.getString("password") != null;
+            rs.close();
+
+            Map<String, String> response = new HashMap<>();
+            if (isLoginSuccessful) {
+                response.put("message", "Login success");
                 System.out.println("Response successfully");
-                return ResponseEntity.status(HttpStatus.OK).body("Login success");
-            }
-            else
-            {
-                rs.close();
-                ps.close();
-                conn.close();
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed, please recheck your credentials");
+                return ResponseEntity.ok(response);
+            } else {
+                response.put("message", "Login failed, please recheck your credentials");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

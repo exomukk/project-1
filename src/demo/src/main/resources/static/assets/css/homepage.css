@@ -1,5 +1,4 @@
 :root {
-
     /**
      * colors
      */
@@ -59,7 +58,7 @@
 
 /*-----------------------------------*\
     #RESET
-  \*-----------------------------------*/
+\*-----------------------------------*/
 
 *,
 *::before,
@@ -116,7 +115,7 @@ body {
 
 /**
    * scrollbar style
-   */
+*/
 
 body::-webkit-scrollbar {
     width: 15px;
@@ -191,11 +190,11 @@ body::-webkit-scrollbar-thumb:hover {
 
 /*-----------------------------------*\
     #MAIN
-  \*-----------------------------------*/
+\*-----------------------------------*/
 
 /**
    * overlay 
-   */
+*/
 
 .overlay {
     position: fixed;
@@ -219,7 +218,7 @@ body::-webkit-scrollbar-thumb:hover {
 
 /**
    * MODAL 
-   */
+*/
 
 .modal {
     position: fixed;
@@ -365,7 +364,7 @@ body::-webkit-scrollbar-thumb:hover {
 
 /**
    * NOTIFICATION TOAST 
-   */
+*/
 
 .notification-toast {
     position: fixed;
@@ -462,7 +461,7 @@ body::-webkit-scrollbar-thumb:hover {
 
 /*-----------------------------------*\
     #HEADER
-  \*-----------------------------------*/
+\*-----------------------------------*/
 
 .header-top,
 .header-user-actions,
@@ -714,13 +713,36 @@ body::-webkit-scrollbar-thumb:hover {
     border-radius: var(--border-radius-md);
 }
 
+.dropdown-header {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content-header {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 12px 16px;
+    z-index: 1;
+}
+
+.dropdown-content-header a {
+    color: black;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
 
 
 
 
 /*-----------------------------------*\
     #BANNER
-  \*-----------------------------------*/
+\*-----------------------------------*/
 
 .banner {
     margin: 30px 0;
@@ -806,9 +828,9 @@ body::-webkit-scrollbar-thumb:hover {
 
 /*-----------------------------------*\
     #CATEGORY
-  \*-----------------------------------*/
+\*-----------------------------------*/
 
-.category {
+/* .category {
     margin-bottom: 30px;
 }
 
@@ -867,7 +889,7 @@ body::-webkit-scrollbar-thumb:hover {
     font-size: var(--fs-9);
     font-weight: var(--weight-500);
     text-transform: capitalize;
-}
+} */
 
 
 
@@ -877,7 +899,7 @@ body::-webkit-scrollbar-thumb:hover {
     #SIDEBAR
   \*-----------------------------------*/
 
-.sidebar {
+/* .sidebar {
     background: var(--white);
     position: fixed;
     top: 0;
@@ -1057,7 +1079,7 @@ body::-webkit-scrollbar-thumb:hover {
     font-size: var(--fs-7);
     font-weight: var(--weight-600);
     color: var(--davys-gray);
-}
+} */
 
 
 
@@ -1228,7 +1250,7 @@ body::-webkit-scrollbar-thumb:hover {
 
 /*-----------------------------------*\
     #PRODUCT GRID
-  \*-----------------------------------*/
+\*-----------------------------------*/
 
 .product-main {
     margin-bottom: 30px;
@@ -1401,7 +1423,7 @@ body::-webkit-scrollbar-thumb:hover {
 
 /*-----------------------------------*\
     #TESTIMONIAL
-  \*-----------------------------------*/
+\*-----------------------------------*/
 
 .testimonials-box {
     margin-bottom: 50px;
@@ -1452,7 +1474,7 @@ body::-webkit-scrollbar-thumb:hover {
 
 /*-----------------------------------*\
     #CTA
-  \*-----------------------------------*/
+\*-----------------------------------*/
 
 .cta-container {
     position: relative;
@@ -1520,7 +1542,7 @@ body::-webkit-scrollbar-thumb:hover {
 
 /*-----------------------------------*\
     #SERVICE
-  \*-----------------------------------*/
+\*-----------------------------------*/
 
 .service-container {
     display: flex;
@@ -1572,7 +1594,7 @@ body::-webkit-scrollbar-thumb:hover {
 
 /*-----------------------------------*\
     #FOOTER
-  \*-----------------------------------*/
+\*-----------------------------------*/
 
 footer {
     background: var(--eerie-black);
@@ -1745,7 +1767,7 @@ footer {
 
 /*-----------------------------------*\
     #RESPONSIVE
-  \*-----------------------------------*/
+\*-----------------------------------*/
 
 
 /**
@@ -1767,7 +1789,6 @@ footer {
         --fs-1: 1.875rem;
 
     }
-
 
 
     /**
@@ -1964,13 +1985,13 @@ footer {
      * #CATEGORY
      */
 
-    .category-item-container {
+    /* .category-item-container {
         gap: 30px;
     }
 
     .category-item {
         min-width: calc(50% - 15px);
-    }
+    } */
 
 
 
@@ -1999,20 +2020,6 @@ footer {
 
     .cta-container {
         aspect-ratio: 6 / 5;
-    }
-
-
-
-    /**
-     * #BLOG
-     */
-
-    .blog-container {
-        gap: 30px;
-    }
-
-    .blog-card {
-        min-width: calc(50% - 15px);
     }
 
 }
@@ -2601,20 +2608,6 @@ footer {
 
 
     /**
-     * #BLOG
-     */
-
-    .blog-card {
-        min-width: calc(33.33% - 20px);
-    }
-
-    .blog-title {
-        --fs-5: 1rem;
-    }
-
-
-
-    /**
      * #FOOTER
      */
 
@@ -2730,20 +2723,6 @@ footer {
     .service-item {
         flex-direction: row;
         text-align: left;
-    }
-
-
-
-    /**
-     * #BLOG
-     */
-
-    .blog {
-        margin-bottom: 50px;
-    }
-
-    .blog-card {
-        min-width: calc(25% - 22.5px);
     }
 
 

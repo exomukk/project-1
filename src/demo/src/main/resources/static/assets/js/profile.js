@@ -36,8 +36,8 @@ async function submitForm() {
     const data = await response.json();
 
     console.log('Đăng nhập thành công! Dữ liệu nhận được: ', data);
-    // Chuyển hướng đến trang homepage.html
-    window.location.href = "homepage.html";
+    // Chuyển hướng đến trang index.html
+    window.location.href = "index.html";
   } catch (error) {
     console.error('There has been a problem with your fetch operation: ', error);
   }
