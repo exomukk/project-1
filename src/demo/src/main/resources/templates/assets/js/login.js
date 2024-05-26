@@ -13,9 +13,9 @@ async function submitForm() {
 
     if (response.status === 200) {
         const data = await response.json();
-        // Login thành công, redirect sang index.html
+        // Login thành công, redirect sang homepage.html
         console.log(data.message); // In ra thông báo từ server
-        window.location.href = 'index.html';
+        window.location.href = 'homepage.html';
     } else {
         const data = await response.json();
         // Login thất bại, hiển thị thông báo lỗi

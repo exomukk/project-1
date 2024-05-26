@@ -11,15 +11,18 @@
 
 <body>
     <div class="c2">
-        <form class="signup">
+        <form class="signup" id="registerForm" onsubmit="event.preventDefault(); submitForm();">
             <h1 class="signup1">SIGN UP</h1>
             <br><br><br><br>
             <label>
-                <input name="username" type="text" placeholder="Username*" class="username"/>
-                <input name="password" type="password" placeholder="Password*" class="password"/>
+                <input name="username" type="text" placeholder="Username*" class="username" required/>
+                <input name="password" type="password" placeholder="Password*" class="password" required/>
+                <input name="phone" type="text" placeholder="Phone Number*" class="phone" required/>
+                <input name="address" type="text" placeholder="Address*" class="address" required/>
+                <input name="avatar" type="file" class="avatar"/>
             </label>
 
-            <button type="submit" class="btn" onclick="submitForm()">Get Started</button>
+            <button type="submit" class="btn">Get Started</button>
 
             <br><br><br><br>
             <a href="login.html">

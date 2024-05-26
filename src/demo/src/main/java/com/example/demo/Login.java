@@ -52,6 +52,7 @@ public class Login {
                 return ResponseEntity.ok(response);
             } else {
                 response.put("message", "Login failed, please recheck your credentials");
+                System.out.println("Wrong password");
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
             }
         } catch (SQLException e) {

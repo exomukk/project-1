@@ -86,3 +86,12 @@ for (let i = 0; i < accordionBtn.length; i++) {
   });
 
 }
+
+function toggleDropdown() {
+  var dropdownContent = document.getElementById("dropdown-content");
+  if (dropdownContent.style.visibility === "hidden") {
+    dropdownContent.style.visibility = "visible";
+  } else {
+    dropdownContent.style.visibility = "hidden";
+  }
+}

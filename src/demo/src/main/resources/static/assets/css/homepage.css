@@ -719,7 +719,7 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 .dropdown-content-header {
-    display: none;
+    visibility: hidden;
     position: absolute;
     background-color: #f9f9f9;
     min-width: 160px;
@@ -730,10 +730,6 @@ body::-webkit-scrollbar-thumb:hover {
 
 .dropdown-content-header a {
     color: black;
-}
-
-.dropdown:hover .dropdown-content {
-    display: block;
 }
 
 
