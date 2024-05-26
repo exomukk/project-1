@@ -87,11 +87,27 @@ for (let i = 0; i < accordionBtn.length; i++) {
 
 }
 
-function toggleDropdown() {
-    var dropdownContent = document.getElementById("dropdown-content-header");
-    if (dropdownContent.style.visibility === "hidden") {
-        dropdownContent.style.visibility = "visible";
-    } else {
-        dropdownContent.style.visibility = "hidden";
+document.addEventListener('DOMContentLoaded', function() {
+    const userId = localStorage.getItem('userId');
+    if (userId) {
+        document.getElementById('login-link').style.display = 'none';
+        document.getElementById('register-link').style.display = 'none';
+        document.getElementById('logout-link').style.display = 'block';
+        document.getElementById('profile-link').style.display = 'block';
     }
+});
+
+function toggleDropdown() {
+    const dropdown = document.getElementById('dropdown-content-header');
+    dropdown.style.visibility = dropdown.style.visibility === 'hidden' ? 'visible' : 'hidden';
+}
+
+function logout() {
+    localStorage.removeItem('userId');
+    window.location.reload();
+}
+
+function editProfile() {
+    const userId = localStorage.getItem('userId');
+    window.location.href = `profile.html?id=${userId}`;
 }

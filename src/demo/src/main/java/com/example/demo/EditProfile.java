@@ -26,19 +26,56 @@ public class EditProfile {
     @Setter
     @Component
     public static class editProfileInfo{
+        private String id;
         private String username;
         private String password;
+        private String address;
+        private String phone;
     }
 
     @PostMapping("/editprofile.app")
     public ResponseEntity<String> editProfile(@RequestBody EditProfile.editProfileInfo editProfileInfo){
         System.out.println("Connected successfully");
-        String updateQuery = "UPDATE master.dbo.[user] SET password = ? WHERE username = ?";
-        try {
-            Connection conn = dataSource.getConnection();
-            PreparedStatement ps = conn.prepareStatement(updateQuery);
-            ps.setString(1, editProfileInfo.password);
-            ps.setString(2, editProfileInfo.username);
+        StringBuilder updateQuery = new StringBuilder("UPDATE master.dbo.[user] SET ");
+        boolean firstField = true;
+
+        if (editProfileInfo.username != null && !editProfileInfo.username.isEmpty()) {
+            updateQuery.append("username = ?");
+            firstField = false;
+        }
+        if (editProfileInfo.password != null && !editProfileInfo.password.isEmpty()) {
+            if (!firstField) updateQuery.append(", ");
+            updateQuery.append("password = ?");
+            firstField = false;
+        }
+        if (editProfileInfo.address != null && !editProfileInfo.address.isEmpty()) {
+            if (!firstField) updateQuery.append(", ");
+            updateQuery.append("address = ?");
+            firstField = false;
+        }
+        if (editProfileInfo.phone != null && !editProfileInfo.phone.isEmpty()) {
+            if (!firstField) updateQuery.append(", ");
+            updateQuery.append("phone = ?");
+        }
+        updateQuery.append(" WHERE id = ?");
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(updateQuery.toString())) {
+            int paramIndex = 1;
+            if (editProfileInfo.username != null && !editProfileInfo.username.isEmpty()) {
+                ps.setString(paramIndex++, editProfileInfo.username);
+            }
+            if (editProfileInfo.password != null && !editProfileInfo.password.isEmpty()) {
+                ps.setString(paramIndex++, editProfileInfo.password);
+            }
+            if (editProfileInfo.address != null && !editProfileInfo.address.isEmpty()) {
+                ps.setString(paramIndex++, editProfileInfo.address);
+            }
+            if (editProfileInfo.phone != null && !editProfileInfo.phone.isEmpty()) {
+                ps.setString(paramIndex++, editProfileInfo.phone);
+            }
+            ps.setString(paramIndex, editProfileInfo.id);
+
             int rowsUpdated = ps.executeUpdate();
             if (rowsUpdated > 0) {
                 System.out.println("Profile updated successfully");

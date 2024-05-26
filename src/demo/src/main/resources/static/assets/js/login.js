@@ -16,10 +16,12 @@ async function submitForm() {
 
         if (response.status === 200) {
             const data = await response.json();
+            localStorage.setItem('userId', data.id); // Lưu trữ ID người dùng
             alert(data.message);
             // Login thành công, redirect sang homepage.html
             console.log(data.message); // In ra thông báo từ server
-            window.location.href = 'homepage.html';
+            const userId = localStorage.getItem('userId');
+            window.location.href = `homepage.html?id=${userId}`;
         } else if (response.status === 401) {
             const data = await response.json();
             // Login thất bại, hiển thị thông báo lỗi

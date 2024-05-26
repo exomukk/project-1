@@ -10,10 +10,14 @@ toastCloseBtn.addEventListener('click', function () {
 async function submitForm() {
   const username = document.getElementsByClassName("username")[0].value;
   const password = document.getElementsByClassName("password")[0].value;
+  const address = document.getElementsByClassName("address")[0].value;
+  const phone = document.getElementsByClassName("phone")[0].value;
   console.log(username + password);
   const editProfileInfo = {
     username: username,
-    password: password
+    password: password,
+    address: address,
+    phone: phone
   };
 
   console.log(editProfileInfo);
@@ -29,16 +33,21 @@ async function submitForm() {
 
     console.log('Server response: ', response);
 
-    if (!response.ok) {
-      throw new Error('Something went wrong');
+    if (response === 200) {
+      const data = await response.json();
+      alert(data.message);
+      // Edit thành công, redirect sang homepage.html
+      console.log(data.message); // In ra thông báo từ server
+    } else {
+      const data = await response.json();
+      console.log(data);
+      console.log(response);
+      // Xử lý các trường hợp lỗi khác
+      alert(data.message || 'An unknown error occurred.');
     }
 
-    const data = await response.json();
-
-    console.log('Đăng nhập thành công! Dữ liệu nhận được: ', data);
-    // Chuyển hướng đến trang homepage.html
-    window.location.href = "homepage.html";
   } catch (error) {
-    console.error('There has been a problem with your fetch operation: ', error);
+    console.error('Error during edit request:', error);
+    alert('An error occurred. Please try again.');
   }
 }

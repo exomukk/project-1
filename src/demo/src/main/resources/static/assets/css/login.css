@@ -62,6 +62,34 @@ body {
     font-size: 14px;
 }
 
+.phone {
+    font-weight: bold;
+    width: 200px;
+    margin: 0 35px 20px;
+    height: 35px;
+    padding: 6px 15px;
+    border-radius: 5px;
+    outline: none;
+    border: none;
+    background: #F6F7F9;
+    color: #748194;
+    font-size: 14px;
+}
+
+.address {
+    font-weight: bold;
+    width: 200px;
+    margin: 0 35px 20px;
+    height: 35px;
+    padding: 6px 15px;
+    border-radius: 5px;
+    outline: none;
+    border: none;
+    background: #F6F7F9;
+    color: #748194;
+    font-size: 14px;
+}
+
 .btn {
     font-weight: bold;
     width: 230px;

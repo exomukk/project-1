@@ -115,15 +115,17 @@
 
     <!-- MAIN -->
     <main>
-        <form class="editProfile">
+        <form class="editProfile" onsubmit="event.preventDefault(); submitForm()">
             <h1 class="editProfile1">Edit your profile</h1>
             <br><br><br><br>
             <label>
                 <input name="username" type="text" placeholder="Username*" class="username"/>
                 <input name="password" type="password" placeholder="Password*" class="password"/>
+                <input name="address" type="text" placeholder="Address*" class="address"/>
+                <input name="phone" type="text" placeholder="Phone*" class="phone"/>
             </label>
 
-            <button type="submit" class="btn" onclick="submitForm()">Sumbit</button>
+            <button type="submit" class="btn">Sumbit</button>
         </form>
     </main>
 

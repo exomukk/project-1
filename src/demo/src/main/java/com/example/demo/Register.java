@@ -71,6 +71,14 @@ public class Register {
                 int rowsAffected = registerStmt.executeUpdate();
 
                 if (rowsAffected > 0) {
+//                    try (ResultSet generatedKeys = registerStmt.getGeneratedKeys()) {
+//                        if (generatedKeys.next()) {
+//                            long userId = generatedKeys.getLong(1);
+//                            response.put("message", "Register success");
+//                            System.out.println("Response successfully");
+//                            return ResponseEntity.ok(response);
+//                        }
+//                    }
                     response.put("message", "Register success");
                     System.out.println("Response successfully");
                     return ResponseEntity.ok(response);
