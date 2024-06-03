@@ -1,11 +1,26 @@
 # project - 1
-### Auction Website
 
-- Week 1-2: Planning
-- Week 3-4: Login UI, connect to database, login function with mysql 
-- Week 5-6: Hoàn thiện login function, homepage UI
+## Auction Website
 
-P/S: 
-- Working on `./demo/src/main`
-- Frontend in `static` folder
-- Homepage need backend
+### Description:
+- A small MVC project
+- The 2 developers coded this up is swimming in deadlines
+
+### Member & Assignment:
+- Ngô Anh Quân: Leader, Backend for `Login` functions, `Auction Room` functions
+- Trần Đăng Huy: Co-Leader, main UX-UI, Frontend for `Login` functions, `Homepage` functions, `Profile` functions
+
+### Tech stacks:
+- Frontend: HTML, CSS, JavaScript
+- Backend: Java
+- Maven Build Tools
+- IntelliJ IDEA Ultimate 2024 & Visual Studio Code
+- Docker
+
+### How to run ?
+- Clone this repository
+- Run `docker-compose up`
+- Run class `AuctiononlineApplication` in `./demo/src/main/java/com/example/demo` to run the backend
+- Open localhost `http://localhost/-port-` to open the website
+
+P/S: The website is 60% done (4/6/2024)
