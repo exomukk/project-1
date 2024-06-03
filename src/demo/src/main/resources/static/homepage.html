@@ -144,8 +144,10 @@
                                 z-index: 1;">
                             <a id="login-link" href="login.html" style="color: black;">Login</a>
                             <a id="register-link" href="register.html" style="color: black;">Register</a>
-                            <a id="logout-link" href="#" style="color: black; display: none;" onclick="logout()">Logout</a>
-                            <a id="profile-link" href="profile.html" style="color: black; display: none;" onclick="editProfile()">Edit Profile</a>
+                            <a id="logout-link" href="#" style="color: black; display: none;"
+                                onclick="logout()">Logout</a>
+                            <a id="profile-link" href="profile.html" style="color: black; display: none;"
+                                onclick="editProfile()">Edit Profile</a>
                         </div>
                     </div>
 
@@ -707,9 +709,10 @@
                         <!-- PRODUCT -->
                         <h2 class="title">Upcomming products</h2>
 
-                        <div class="product-grid">
+                        <div class="product-grid" id="product-grid">
+                            <button class="btn" onclick="fetchItems()">Test</button>
 
-                            <div class="showcase">
+                            <!-- <div class="showcase">
 
                                 <div class="showcase-banner">
 
@@ -758,184 +761,10 @@
 
                                 </div>
 
-                            </div>
-
-                            <div class="showcase">
-
-                                <div class="showcase-banner">
-                                    <img src="https://m.media-amazon.com/images/I/61MxE93f37L._AC_SL1500_.jpg" alt=""
-                                        class="product-img default" width="300">
-                                    <img src="https://m.media-amazon.com/images/I/61MxE93f37L._AC_SL1500_.jpg" alt=""
-                                        class="product-img hover" width="300">
-
-                                    <p class="showcase-badge angle black">re-sale</p>
-
-                                    <div class="showcase-actions">
-                                        <button class="btn-action">
-                                            <ion-icon name="eye-outline"></ion-icon>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div class="showcase-content">
-                                    <a href="#" class="showcase-category">computer</a>
-
-                                    <h3>
-                                        <a href="#" class="showcase-title">Razer Blade 15</a>
-                                    </h3>
-
-                                    <div class="showcase-rating">
-                                        <ion-icon name="star"></ion-icon>
-                                        <ion-icon name="star"></ion-icon>
-                                        <ion-icon name="star"></ion-icon>
-                                        <ion-icon name="star-outline"></ion-icon>
-                                        <ion-icon name="star-outline"></ion-icon>
-                                    </div>
-
-                                    <div class="price-box">
-                                        <p class="price">$45.00</p>
-                                        <del>$56.00</del>
-                                    </div>
-
-                                    <div class="price-box">
-                                        <p class="price">Open in: </p>
-                                        <p>12:59:59</p>
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                            <div class="showcase">
-
-                                <div class="showcase-banner">
-                                    <img src="https://i.ebayimg.com/images/g/8A0AAOSweIxgtzlh/s-l1600.webp" alt=""
-                                        class="product-img default" width="300">
-                                    <img src="https://i.ebayimg.com/images/g/8A0AAOSweIxgtzlh/s-l1600.webp" alt=""
-                                        class="product-img hover" width="300">
-
-                                    <div class="showcase-actions">
-                                        <button class="btn-action">
-                                            <ion-icon name="eye-outline"></ion-icon>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div class="showcase-content">
-                                    <a href="#" class="showcase-category">Earphones</a>
-
-                                    <h3>
-                                        <a href="#" class="showcase-title">Razer Hammerhead V3</a>
-                                    </h3>
-
-                                    <div class="showcase-rating">
-                                        <ion-icon name="star"></ion-icon>
-                                        <ion-icon name="star"></ion-icon>
-                                        <ion-icon name="star"></ion-icon>
-                                        <ion-icon name="star-outline"></ion-icon>
-                                        <ion-icon name="star-outline"></ion-icon>
-                                    </div>
-
-                                    <div class="price-box">
-                                        <p class="price">$58.00</p>
-                                    </div>
-
-                                    <div class="price-box">
-                                        <p class="price">Open in: </p>
-                                        <p>12:59:59</p>
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                            <div class="showcase">
-
-                                <div class="showcase-banner">
-                                    <img src="https://tanthanhdanh.vn/wp-content/uploads/2020/11/Razer-Firefly-V2-Mouse-Pad-%E2%80%93-Hard-Edition-With-Chroma-2.jpg"
-                                        alt="" class="product-img default" width="300">
-                                    <img src="https://tanthanhdanh.vn/wp-content/uploads/2020/11/Razer-Firefly-V2-Mouse-Pad-%E2%80%93-Hard-Edition-With-Chroma-2.jpg"
-                                        alt="" class="product-img hover" width="300">
-
-                                    <p class="showcase-badge angle pink">new</p>
-
-                                    <div class="showcase-actions">
-                                        <button class="btn-action">
-                                            <ion-icon name="eye-outline"></ion-icon>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div class="showcase-content">
-                                    <a href="#" class="showcase-category">Gaming gears</a>
-
-                                    <h3>
-                                        <a href="#" class="showcase-title">Razer Firefly V2</a>
-                                    </h3>
-
-                                    <div class="showcase-rating">
-                                        <ion-icon name="star"></ion-icon>
-                                        <ion-icon name="star"></ion-icon>
-                                        <ion-icon name="star"></ion-icon>
-                                        <ion-icon name="star"></ion-icon>
-                                        <ion-icon name="star"></ion-icon>
-                                    </div>
-
-                                    <div class="price-box">
-                                        <p class="price">$25.00</p>
-                                        <del>$35.00</del>
-                                    </div>
-
-                                    <div class="price-box">
-                                        <p class="price">Open in: </p>
-                                        <p>12:59:59</p>
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                            <div class="showcase">
-
-                                <div class="showcase-banner">
-                                    <img src="https://imports77.com/cdn/shop/files/MonitorRazerRaptor27GamingRZ39-03500100-R3U2.png?v=1706295270"
-                                        alt="" class="product-img default" width="300">
-                                    <img src="https://imports77.com/cdn/shop/files/MonitorRazerRaptor27GamingRZ39-03500100-R3U2.png?v=1706295270"
-                                        alt="" class="product-img hover" width="300">
-
-                                    <p class="showcase-badge angle black">re-sale</p>
-
-                                    <div class="showcase-actions">
-                                        <button class="btn-action">
-                                            <ion-icon name="eye-outline"></ion-icon>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div class="showcase-content">
-                                    <a href="#" class="showcase-category">Gaming gears</a>
-
-                                    <h3>
-                                        <a href="#" class="showcase-title">Razer Raptor 27</a>
-                                    </h3>
-
-                                    <div class="showcase-rating">
-                                        <ion-icon name="star"></ion-icon>
-                                        <ion-icon name="star"></ion-icon>
-                                        <ion-icon name="star"></ion-icon>
-                                        <ion-icon name="star-outline"></ion-icon>
-                                        <ion-icon name="star-outline"></ion-icon>
-                                    </div>
-
-                                    <div class="price-box">
-                                        <p class="price">$78.00</p>
-                                    </div>
-
-                                </div>
-
-                            </div>
+                            </div> -->
 
                         </div>
+
 
                         <!-- ROOM -->
                         <br><br><br>
@@ -1193,8 +1022,7 @@
                     <div class="testimonial">
                         <h2 class="title">testimonial</h2>
                         <div class="testimonial-card">
-                            <img src="https://scontent.fhan15-2.fna.fbcdn.net/v/t39.30808-6/434974941_438567415330726_882953856790460958_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeEqR1WawtavynjogzDj6DOaJtNylGQe3Dsm03KUZB7cO3fpWIXfUR0plukeAhtLOLXSnu0FgvKzP7mPnypVBMD3&_nc_ohc=xCLxMbDKqbsQ7kNvgGwhwGf&_nc_ht=scontent.fhan15-2.fna&oh=00_AYDLg-309beNYqZ9NpCscADkqTRjJc7vJgYIxqbQVzU_Cg&oe=665559F3"
-                                alt="alan doe" class="testimonial-banner" width="80" height="80">
+                            <img src="" alt="alan doe" class="testimonial-banner" width="80" height="80">
                             <p class="testimonial-name">Quan Ngoo</p>
                             <p class="testimonial-title">Co-Founder</p>
                             <img src="./assets/images/icons/quotes.svg" alt="quotation" class="quotation-img"
@@ -1376,6 +1204,53 @@
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
     <!-- custom js -->
+    <script>
+        async function fetchItems() {
+            console.log("trying to get data");
+
+            try {
+                const response = await fetch('/items');
+                if (response.ok) {
+                    const items = await response.json();
+                    const productGrid = document.getElementById('product-grid');
+                    productGrid.innerHTML = ''; // Clear existing content
+                    items.forEach(item => {
+                        const productHTML = `
+                    <div class="showcase">
+                        <div class="showcase-banner">
+                            <img src="https://product.hstatic.net/1000287389/product/ges-container_h36_h7a_9261073006622_razer-blackwidow-v3-1500x1000-0-v3_6a35d09a17404684922fc68ebfe8eb23_master.jpg" alt="" width="300" class="product-img default">
+                            <img src="https://product.hstatic.net/1000287389/product/ges-container_h36_h7a_9261073006622_razer-blackwidow-v3-1500x1000-0-v3_6a35d09a17404684922fc68ebfe8eb23_master.jpg" alt="" width="300" class="product-img hover">
+                            <div class="showcase-actions">
+                                <button class="btn-action">
+                                    <ion-icon name="eye-outline"></ion-icon>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="showcase-content">
+                            <a href="#">
+                                <h3 class="showcase-title">${item.name}</h3>
+                            </a>
+                            <div class="price-box">
+                                <p class="price">$${item.price}</p>
+                            </div>
+                            <div class="price-box">
+                                <p class="price">Open in: ${item.openTime}</p>
+                            </div>
+                            <p class="description">${item.description}</p>
+                        </div>
+                    </div>
+                `;
+                        productGrid.insertAdjacentHTML('beforeend', productHTML);
+                        productGrid.insertAdjacentHTML('beforeend', productHTML);
+                    });
+                } else {
+                    console.error('Error fetching items:', response.status);
+                }
+            } catch (error) {
+                console.error('Error during fetch request:', error);
+            }
+        }
+    </script>
 </body>
 
 </html>
