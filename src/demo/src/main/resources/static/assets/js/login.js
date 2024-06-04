@@ -16,12 +16,20 @@ async function submitForm() {
 
         if (response.status === 200) {
             const data = await response.json();
-            localStorage.setItem('userId', data.id); // Lưu trữ ID người dùng
+            const message = data.message;
+            const userIdMatch = message.match(/User ID: (\d+)/); // Lấy ID người dùng
+
             alert(data.message);
-            // Login thành công, redirect sang homepage.html
-            console.log(data.message); // In ra thông báo từ server
-            const userId = localStorage.getItem('userId');
-            window.location.href = `homepage.html?id=${userId}`;
+            if (userIdMatch && userIdMatch[1]) {
+                const userId = userIdMatch[1];
+                localStorage.setItem('userId', userId); // Lưu trữ ID người dùng
+                alert(message);
+                console.log(message); // In ra thông báo từ server
+                // Login thành công, redirect sang homepage.html
+                window.location.href = `homepage.html?id=${userId}`;
+            } else {
+                console.error("There's something wrong in login function");
+            }
         } else if (response.status === 401) {
             const data = await response.json();
             // Login thất bại, hiển thị thông báo lỗi
