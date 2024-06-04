@@ -710,7 +710,6 @@
                         <h2 class="title">Upcomming products</h2>
 
                         <div class="product-grid" id="product-grid">
-                            <button class="btn" onclick="fetchItems()">Test</button>
 
                             <!-- <div class="showcase">
 
@@ -1204,53 +1203,7 @@
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
     <!-- custom js -->
-    <script>
-        async function fetchItems() {
-            console.log("trying to get data");
-
-            try {
-                const response = await fetch('/items');
-                if (response.ok) {
-                    const items = await response.json();
-                    const productGrid = document.getElementById('product-grid');
-                    productGrid.innerHTML = ''; // Clear existing content
-                    items.forEach(item => {
-                        const productHTML = `
-                    <div class="showcase">
-                        <div class="showcase-banner">
-                            <img src="https://product.hstatic.net/1000287389/product/ges-container_h36_h7a_9261073006622_razer-blackwidow-v3-1500x1000-0-v3_6a35d09a17404684922fc68ebfe8eb23_master.jpg" alt="" width="300" class="product-img default">
-                            <img src="https://product.hstatic.net/1000287389/product/ges-container_h36_h7a_9261073006622_razer-blackwidow-v3-1500x1000-0-v3_6a35d09a17404684922fc68ebfe8eb23_master.jpg" alt="" width="300" class="product-img hover">
-                            <div class="showcase-actions">
-                                <button class="btn-action">
-                                    <ion-icon name="eye-outline"></ion-icon>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="showcase-content">
-                            <a href="#">
-                                <h3 class="showcase-title">${item.name}</h3>
-                            </a>
-                            <div class="price-box">
-                                <p class="price">$${item.price}</p>
-                            </div>
-                            <div class="price-box">
-                                <p class="price">Open in: ${item.openTime}</p>
-                            </div>
-                            <p class="description">${item.description}</p>
-                        </div>
-                    </div>
-                `;
-                        productGrid.insertAdjacentHTML('beforeend', productHTML);
-                        productGrid.insertAdjacentHTML('beforeend', productHTML);
-                    });
-                } else {
-                    console.error('Error fetching items:', response.status);
-                }
-            } catch (error) {
-                console.error('Error during fetch request:', error);
-            }
-        }
-    </script>
+    <script></script>
 </body>
 
 </html>

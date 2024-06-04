@@ -31,12 +31,13 @@ public class Item {
         private String price;
         private String description;
         private String openTime;
+        private String imageLink;
     }
 
     @GetMapping("/items")
     public ResponseEntity<List<ItemInfo>> getItems() {
         List<ItemInfo> items = new ArrayList<>();
-        String query = "SELECT id, name, price, description, openTime FROM items";
+        String query = "SELECT id, name, price, description, openTime, imageLink FROM items";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(query);
              ResultSet rs = ps.executeQuery()) {
@@ -48,6 +49,7 @@ public class Item {
                 item.setPrice(rs.getString("price"));
                 item.setDescription(rs.getString("description"));
                 item.setOpenTime(rs.getString("openTime"));
+                item.setImageLink(rs.getString("imageLink"));
                 items.add(item);
             }
             return ResponseEntity.status(HttpStatus.OK).body(items);
