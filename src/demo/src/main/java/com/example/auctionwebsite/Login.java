@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -36,21 +37,31 @@ public class Login {
     @PostMapping("/login.app")
     public ResponseEntity<Map<String, String>> login(@RequestBody loginInfo loginInfo) {
         System.out.println("Connected successfully");
-        String loginQuery = "SELECT id FROM master.dbo.[user] WHERE username = ? AND password= ?";
+        String loginQuery = "SELECT id, password FROM master.dbo.[user] WHERE username = ?";
+
+        // Check the password
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
         try (Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(loginQuery)) {
             ps.setString(1, loginInfo.getUsername());
-            ps.setString(2, loginInfo.getPassword());
 
             try (ResultSet rs = ps.executeQuery()) {
                 Map<String, String> response = new HashMap<>();
                 if (rs.next()) {
-                    long userId = rs.getLong("id");
-                    response.put("message", "Login success. User ID: " + userId);
-                    return ResponseEntity.status(HttpStatus.OK).body(response);
+                    String storedPasswordHash = rs.getString("password");
+                    if (passwordEncoder.matches(loginInfo.getPassword(), storedPasswordHash)) {
+                        long userId = rs.getLong("id");
+                        response.put("message", "Login success. User ID: " + userId);
+                        return ResponseEntity.status(HttpStatus.OK).body(response);
+                    } else {
+                        response.put("message", "Login failed, please recheck your credentials");
+                        System.out.println("Wrong password");
+                        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+                    }
                 } else {
                     response.put("message", "Login failed, please recheck your credentials");
-                    System.out.println("Wrong password");
+                    System.out.println("Something wrong");
                     return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
                 }
             } catch (SQLException e) {

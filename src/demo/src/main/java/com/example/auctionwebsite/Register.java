@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -38,6 +39,10 @@ public class Register {
         String checkUserQuery = "SELECT COUNT(*) FROM master.dbo.[user] WHERE username = ? OR phone = ?";
         String registerQuery = "INSERT INTO master.dbo.[user] (username, password, phone, address) VALUES (?, ?, ?, ?)";
 
+        // Hash the password
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode(loginInfo.password);
+
         Map<String, String> response;
         try (Connection conn = dataSource.getConnection()) {
             response = new HashMap<>();
@@ -58,7 +63,7 @@ public class Register {
             // Register new user
             try (PreparedStatement registerStmt = conn.prepareStatement(registerQuery, Statement.RETURN_GENERATED_KEYS)) {
                 registerStmt.setString(1, loginInfo.username);
-                registerStmt.setString(2, loginInfo.password);
+                registerStmt.setString(2, hashedPassword);
                 registerStmt.setString(3, loginInfo.phone);
                 registerStmt.setString(4, loginInfo.address);
                 // registerStmt.setBytes(5, loginInfo.avatar.getBytes());
