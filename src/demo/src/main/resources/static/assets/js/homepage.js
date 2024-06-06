@@ -98,6 +98,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('register-link').style.display = 'none';
         document.getElementById('logout-link').style.display = 'block';
         document.getElementById('profile-link').style.display = 'block';
+        document.getElementById('room-link').style.display = 'block';
     }
 });
 

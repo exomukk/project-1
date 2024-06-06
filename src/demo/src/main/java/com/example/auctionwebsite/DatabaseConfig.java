@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.auctionwebsite;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

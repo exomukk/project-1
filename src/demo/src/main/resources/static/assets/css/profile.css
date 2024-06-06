@@ -1330,3 +1330,18 @@ footer {
     color: white;
     font-size: 14px;
 }
+
+.createRoom .btn {
+    font-weight: bold;
+    width: 40vh;
+    margin: auto;
+    margin-bottom: 5vh;
+    height: 5vh;
+    padding: 6px 15px;
+    border-radius: 5px;
+    outline: none;
+    border: none;
+    background: green;
+    color: white;
+    font-size: 14px;
+}

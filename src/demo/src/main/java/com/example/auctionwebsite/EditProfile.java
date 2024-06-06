@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.auctionwebsite;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -36,28 +36,7 @@ public class EditProfile {
     @PostMapping("/editprofile.app")
     public ResponseEntity<String> editProfile(@RequestBody EditProfile.editProfileInfo editProfileInfo){
         System.out.println("Connected successfully");
-        StringBuilder updateQuery = new StringBuilder("UPDATE master.dbo.[user] SET ");
-        boolean firstField = true;
-
-        if (editProfileInfo.username != null && !editProfileInfo.username.isEmpty()) {
-            updateQuery.append("username = ?");
-            firstField = false;
-        }
-        if (editProfileInfo.password != null && !editProfileInfo.password.isEmpty()) {
-            if (!firstField) updateQuery.append(", ");
-            updateQuery.append("password = ?");
-            firstField = false;
-        }
-        if (editProfileInfo.address != null && !editProfileInfo.address.isEmpty()) {
-            if (!firstField) updateQuery.append(", ");
-            updateQuery.append("address = ?");
-            firstField = false;
-        }
-        if (editProfileInfo.phone != null && !editProfileInfo.phone.isEmpty()) {
-            if (!firstField) updateQuery.append(", ");
-            updateQuery.append("phone = ?");
-        }
-        updateQuery.append(" WHERE id = ?");
+        StringBuilder updateQuery = getStringBuilder(editProfileInfo);
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(updateQuery.toString())) {
@@ -90,5 +69,31 @@ public class EditProfile {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private static StringBuilder getStringBuilder(editProfileInfo editProfileInfo) {
+        StringBuilder updateQuery = new StringBuilder("UPDATE master.dbo.[user] SET ");
+        boolean firstField = true;
+
+        if (editProfileInfo.username != null && !editProfileInfo.username.isEmpty()) {
+            updateQuery.append("username = ?");
+            firstField = false;
+        }
+        if (editProfileInfo.password != null && !editProfileInfo.password.isEmpty()) {
+            if (!firstField) updateQuery.append(", ");
+            updateQuery.append("password = ?");
+            firstField = false;
+        }
+        if (editProfileInfo.address != null && !editProfileInfo.address.isEmpty()) {
+            if (!firstField) updateQuery.append(", ");
+            updateQuery.append("address = ?");
+            firstField = false;
+        }
+        if (editProfileInfo.phone != null && !editProfileInfo.phone.isEmpty()) {
+            if (!firstField) updateQuery.append(", ");
+            updateQuery.append("phone = ?");
+        }
+        updateQuery.append(" WHERE id = ?");
+        return updateQuery;
     }
 }

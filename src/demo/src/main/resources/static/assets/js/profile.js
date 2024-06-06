@@ -51,3 +51,8 @@ async function submitForm() {
     alert('An error occurred. Please try again.');
   }
 }
+
+function createRoom() {
+  const userId = localStorage.getItem('userId');
+    window.location.href = `add_room.html?id=${userId}`;
+}

@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.auctionwebsite;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,16 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.sql.DataSource;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,8 +38,9 @@ public class Register {
         String checkUserQuery = "SELECT COUNT(*) FROM master.dbo.[user] WHERE username = ? OR phone = ?";
         String registerQuery = "INSERT INTO master.dbo.[user] (username, password, phone, address) VALUES (?, ?, ?, ?)";
 
+        Map<String, String> response;
         try (Connection conn = dataSource.getConnection()) {
-            Map<String, String> response = new HashMap<>();
+            response = new HashMap<>();
             // Check for duplicate username or phone
             try (PreparedStatement checkStmt = conn.prepareStatement(checkUserQuery)) {
                 checkStmt.setString(1, loginInfo.username);
@@ -61,27 +56,24 @@ public class Register {
             }
 
             // Register new user
-            try (PreparedStatement registerStmt = conn.prepareStatement(registerQuery)) {
+            try (PreparedStatement registerStmt = conn.prepareStatement(registerQuery, Statement.RETURN_GENERATED_KEYS)) {
                 registerStmt.setString(1, loginInfo.username);
                 registerStmt.setString(2, loginInfo.password);
                 registerStmt.setString(3, loginInfo.phone);
                 registerStmt.setString(4, loginInfo.address);
-//                registerStmt.setBytes(5, loginInfo.avatar.getBytes());
+                // registerStmt.setBytes(5, loginInfo.avatar.getBytes());
 
                 int rowsAffected = registerStmt.executeUpdate();
 
                 if (rowsAffected > 0) {
-//                    try (ResultSet generatedKeys = registerStmt.getGeneratedKeys()) {
-//                        if (generatedKeys.next()) {
-//                            long userId = generatedKeys.getLong(1);
-//                            response.put("message", "Register success");
-//                            System.out.println("Response successfully");
-//                            return ResponseEntity.ok(response);
-//                        }
-//                    }
-                    response.put("message", "Register success");
-                    System.out.println("Response successfully");
-                    return ResponseEntity.ok(response);
+                    try (ResultSet generatedKeys = registerStmt.getGeneratedKeys()) {
+                        if (generatedKeys.next()) {
+                            long userId = generatedKeys.getLong(1);
+                            response.put("message", "Register success. User ID: " + userId);
+                            System.out.println("Response successfully");
+                            return ResponseEntity.ok(response);
+                        }
+                    }
                 } else {
                     response.put("message", "Internal server error");
                     System.out.println("Response unsuccessfully");
@@ -91,5 +83,9 @@ public class Register {
         } catch (SQLException e) {
             throw new RuntimeException("Error during registration", e);
         }
+
+        // Add a default return statement
+        response.put("message", "Unexpected error");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
 }

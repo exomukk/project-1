@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.auctionwebsite;
 
 import lombok.Getter;
 import lombok.Setter;

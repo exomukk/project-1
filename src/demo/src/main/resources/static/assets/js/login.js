@@ -23,7 +23,6 @@ async function submitForm() {
             if (userIdMatch && userIdMatch[1]) {
                 const userId = userIdMatch[1];
                 localStorage.setItem('userId', userId); // Lưu trữ ID người dùng
-                alert(message);
                 console.log(message); // In ra thông báo từ server
                 // Login thành công, redirect sang homepage.html
                 window.location.href = `homepage.html?id=${userId}`;
