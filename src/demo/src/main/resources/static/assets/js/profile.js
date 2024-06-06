@@ -1,3 +1,5 @@
+var headerLogo = document.getElementsByClassName('header-logo');
+
 // notification toast variables
 const notificationToast = document.querySelector('[data-toast]');
 const toastCloseBtn = document.querySelector('[data-toast-close]');
@@ -54,5 +56,14 @@ async function submitForm() {
 
 function createRoom() {
   const userId = localStorage.getItem('userId');
-    window.location.href = `add_room.html?id=${userId}`;
+  window.location.href = `add_room.html?id=${userId}`;
+}
+
+var returnHomepage = function() {
+  const userId = localStorage.getItem('userId');
+  window.location.href = `homepage.html?id=${userId}`;
+};
+
+for (var i = 0; i < headerLogo.length; i++) {
+  headerLogo[i].addEventListener('click', returnHomepage, false);
 }
