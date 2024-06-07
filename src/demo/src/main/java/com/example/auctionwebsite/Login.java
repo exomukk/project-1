@@ -10,9 +10,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.sql.DataSource;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -39,8 +41,8 @@ public class Login {
         System.out.println("Connected successfully");
         String loginQuery = "SELECT id, password FROM master.dbo.[user] WHERE username = ?";
 
-        // Check the password
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        // Hash the password
+        String hashedPassword = encodePassword(loginInfo.getPassword());
 
         try (Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(loginQuery)) {
@@ -50,7 +52,7 @@ public class Login {
                 Map<String, String> response = new HashMap<>();
                 if (rs.next()) {
                     String storedPasswordHash = rs.getString("password");
-                    if (passwordEncoder.matches(loginInfo.getPassword(), storedPasswordHash)) {
+                    if (hashedPassword.equals(storedPasswordHash)) {
                         long userId = rs.getLong("id");
                         response.put("message", "Login success. User ID: " + userId);
                         return ResponseEntity.status(HttpStatus.OK).body(response);
@@ -70,6 +72,30 @@ public class Login {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    // Since I don't know how to use the Spring Security - aka - BCryptPasswordEncoder
+    // I'll do the SHA-256 hash by myself
+    private String encodePassword(String password) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] encodedHash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
+            return bytesToHex(encodedHash);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private String bytesToHex(byte[] hash) {
+        StringBuilder hexString = new StringBuilder(2 * hash.length);
+        for (byte b : hash) {
+            String hex = Integer.toHexString(0xff & b);
+            if (hex.length() == 1) {
+                hexString.append('0');
+            }
+            hexString.append(hex);
+        }
+        return hexString.toString();
     }
 }
 
