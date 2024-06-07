@@ -23,4 +23,7 @@
 - Run class `AuctiononlineApplication` in `./demo/src/main/java/com/example/demo` to run the backend
 - Open localhost `http://localhost/-port-` to open the website
 
-P/S: The website is 60% done (4/6/2024)
+### Screenshot:
+![screenshoot](./Screenshot%202024-06-08%20014425.png)
+
+P/S: The website is 70% done (8/6/2024)
