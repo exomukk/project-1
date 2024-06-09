@@ -1,4 +1,4 @@
-var headerLogo = document.getElementsByClassName('header-logo');
+const headerLogo = document.getElementsByClassName('header-logo');
 
 // notification toast variables
 const notificationToast = document.querySelector('[data-toast]');
@@ -10,12 +10,14 @@ toastCloseBtn.addEventListener('click', function () {
 });
 
 async function submitForm() {
+  const userId = localStorage.getItem('userId');
   const username = document.getElementsByClassName("username")[0].value;
   const password = document.getElementsByClassName("password")[0].value;
   const address = document.getElementsByClassName("address")[0].value;
   const phone = document.getElementsByClassName("phone")[0].value;
-  console.log(username + password);
+  console.log(userId + password);
   const editProfileInfo = {
+    id: userId,
     username: username,
     password: password,
     address: address,
@@ -35,22 +37,25 @@ async function submitForm() {
 
     console.log('Server response: ', response);
 
-    if (response === 200) {
-      const data = await response.json();
-      alert(data.message);
-      // Edit thành công, redirect sang homepage.html
-      console.log(data.message); // In ra thông báo từ server
+    // Check if the response status code is 200 (OK)
+    if (response.status === 200) {
+      try {
+        const data = await response.json();
+        alert(data.message);
+        console.log(data.message); // Log the message from the server
+      } catch (jsonError) {
+        console.error('Error parsing JSON:', jsonError);
+        alert('The server response is not in JSON format.');
+      }
     } else {
-      const data = await response.json();
-      console.log(data);
-      console.log(response);
-      // Xử lý các trường hợp lỗi khác
-      alert(data.message || 'An unknown error occurred.');
+      // Handle non-200 status codes
+      const textData = await response.text();
+      console.log(textData);
+      alert('An error occurred: ' + textData);
     }
-
-  } catch (error) {
-    console.error('Error during edit request:', error);
-    alert('An error occurred. Please try again.');
+  } catch (networkError) {
+    console.error('Network error during edit request:', networkError);
+    alert('A network error occurred. Please try again.');
   }
 }
 
@@ -59,11 +64,12 @@ function createRoom() {
   window.location.href = `add_room.html?id=${userId}`;
 }
 
-var returnHomepage = function() {
+const returnHomepage = function () {
   const userId = localStorage.getItem('userId');
   window.location.href = `homepage.html?id=${userId}`;
 };
 
-for (var i = 0; i < headerLogo.length; i++) {
+let i;
+for (i = 0; i < headerLogo.length; i++) {
   headerLogo[i].addEventListener('click', returnHomepage, false);
 }
