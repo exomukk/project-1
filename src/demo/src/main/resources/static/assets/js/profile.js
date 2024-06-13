@@ -73,3 +73,28 @@ let i;
 for (i = 0; i < headerLogo.length; i++) {
   headerLogo[i].addEventListener('click', returnHomepage, false);
 }
+
+async function fetchItems() {
+  console.error('abc');
+  const userId = localStorage.getItem('userId'); // Lấy userId từ localStorage
+  if (!userId) {
+    console.error('UserId not found in localStorage');
+    return;
+  }
+
+  try {
+    const response = await fetch(`/profile?userId=${userId}`); // Gửi userId như một query parameter
+    if (response.ok) {
+      const user = await response.json();
+      const usernameField = document.querySelector('.username');
+      usernameField.placeholder = user.username; // Cập nhật placeholder nếu cần
+    } else {
+      console.error('Error fetching user:', response.status);
+    }
+  } catch (error) {
+    console.error('Error during fetch request:', error);
+  }
+}
+
+
+document.addEventListener('DOMContentLoaded', fetchItems);
