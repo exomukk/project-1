@@ -7,8 +7,8 @@
 - The 2 developers coded this up is swimming in deadlines
 
 ### Member & Assignment:
-- Ngô Anh Quân: Leader, Backend for `Login` functions, `Auction Room` functions
-- Trần Đăng Huy: Co-Leader, main UX-UI, Frontend for `Login` functions, `Homepage` functions, `Profile` functions
+- Ngô Anh Quân: Leader, Backend for `Login` functions, working on `Bidding` functions
+- Trần Đăng Huy: Co-Leader, main UX-UI, Frontend for `Login` functions, `Register` functions, `Homepage` functions, `Profile` functions, `Auction Room` functions
 
 ### Tech stacks:
 - Frontend: HTML, CSS, JavaScript
