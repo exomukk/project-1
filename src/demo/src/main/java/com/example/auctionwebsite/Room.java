@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.sql.DataSource;
@@ -46,6 +47,30 @@ public class Room {
                 room.setOwnerId(rs.getString("ownerId"));
                 room.setName(rs.getString("name"));
                 rooms.add(room);
+            }
+            return ResponseEntity.status(HttpStatus.OK).body(rooms);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    // API để lấy danh sách các rooms của một user cụ thể
+    @GetMapping("/user/{userId}/addItems")
+    public ResponseEntity<List<RoomInfo>> getRoomsFromUser(@PathVariable String userId) {
+        System.out.println("user ID: " + userId);
+        List<RoomInfo> rooms = new ArrayList<>();
+        String query = "SELECT id, name FROM [auctionRoom] WHERE ownerId = ?";
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setString(1, userId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Room.RoomInfo room = new Room.RoomInfo();
+                    room.setOwnerId(userId);
+                    room.setName(rs.getString("name"));
+                    room.setId(rs.getString("id"));
+                    rooms.add(room);
+                }
             }
             return ResponseEntity.status(HttpStatus.OK).body(rooms);
         } catch (SQLException e) {

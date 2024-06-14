@@ -1,4 +1,5 @@
 const headerLogo = document.getElementsByClassName('header-logo');
+const userId = localStorage.getItem('userId');
 
 // notification toast variables
 const notificationToast = document.querySelector('[data-toast]');
@@ -60,8 +61,11 @@ async function submitForm() {
 }
 
 function createRoom() {
-  const userId = localStorage.getItem('userId');
   window.location.href = `add_room.html?id=${userId}`;
+}
+
+function createItem() {
+  window.location.href = `add_item.html?id=${userId}`;
 }
 
 const returnHomepage = function () {
