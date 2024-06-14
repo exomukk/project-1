@@ -47,6 +47,7 @@ public class AuctionController {
         private String price;
         private String description;
         private String openTime;
+        private String endTime;
         private String imageLink;
     }
 
@@ -113,7 +114,7 @@ public class AuctionController {
     @GetMapping("/auction-rooms/{roomId}/items")
     public ResponseEntity<List<ItemInfo>> getItemsInRoom(@PathVariable String roomId) {
         List<ItemInfo> items = new ArrayList<>();
-        String query = "SELECT id, name, price, description, openTime, imageLink FROM [items] WHERE roomId = ?";
+        String query = "SELECT id, name, price, description, openTime, endTime, imageLink FROM [items] WHERE roomId = ?";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setString(1, roomId);
@@ -126,6 +127,7 @@ public class AuctionController {
                     item.setPrice(rs.getString("price"));
                     item.setDescription(rs.getString("description"));
                     item.setOpenTime(rs.getString("openTime"));
+                    item.setEndTime(rs.getString("endTime"));
                     item.setImageLink(rs.getString("imageLink"));
                     items.add(item);
                 }
@@ -134,13 +136,5 @@ public class AuctionController {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    // API để thêm một item vào phòng đấu giá
-    @PostMapping("/auction-rooms/{roomId}/add-item")
-    public ResponseEntity<Void> addItemToRoom(@PathVariable String roomId, @RequestBody ItemInfo itemInfo) {
-        // Logic để thêm một item vào cơ sở dữ liệu với roomId tương ứng
-        // ...
-        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

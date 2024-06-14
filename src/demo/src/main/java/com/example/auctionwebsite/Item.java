@@ -33,13 +33,14 @@ public class Item {
         private String price;
         private String description;
         private String openTime;
+        private String endTime;
         private String imageLink;
     }
 
     @GetMapping("/items")
     public ResponseEntity<List<ItemInfo>> getItems() {
         List<ItemInfo> items = new ArrayList<>();
-        String query = "SELECT id, name, price, description, openTime, imageLink FROM items";
+        String query = "SELECT id, name, price, description, openTime, endTime, imageLink FROM items";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(query);
              ResultSet rs = ps.executeQuery()) {
@@ -51,6 +52,7 @@ public class Item {
                 item.setPrice(rs.getString("price"));
                 item.setDescription(rs.getString("description"));
                 item.setOpenTime(rs.getString("openTime"));
+                item.setEndTime(rs.getString("endTime"));
                 item.setImageLink(rs.getString("imageLink"));
                 items.add(item);
             }
@@ -63,14 +65,14 @@ public class Item {
     @PostMapping("/createItem")
     public ResponseEntity<Map<String, String>> createItem(@RequestBody ItemInfo itemInfo) {
         Map<String, String> response = new HashMap<>();
-        String insertQuery = "INSERT INTO master.dbo.[items] (name, price, description, openTime, imageLink, roomId) VALUES (?, ?, ?, GETDATE(), ?, ?)";
+        String insertQuery = "INSERT INTO master.dbo.[items] (name, price, description, openTime, endTime, imageLink, roomId) VALUES (?, ?, ?, DATEADD(HOUR, 1, GETDATE()), DATEADD(DAY, 1, DATEADD(HOUR, 1, GETDATE())), ?, ?)";
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, itemInfo.getName());
             ps.setString(2, itemInfo.getPrice());
             ps.setString(3, itemInfo.getDescription());
-            // Không cần thiết lập openTime vì GETDATE() sẽ tự động làm điều này
+            // openTime và endTime được thiết lập tự động trong câu truy vấn
             ps.setString(4, itemInfo.getImageLink());
             ps.setString(5, itemInfo.getRoomId());
 
