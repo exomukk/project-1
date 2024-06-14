@@ -134,7 +134,7 @@ async function fetchItems() {
                             <img src="${item.imageLink}" alt="" width="300" class="product-img hover">
                             <div class="showcase-actions">
                                 <button class="btn-action">
-                                    <ion-icon name="eye-outline"></ion-icon>
+                                    <ion-icon name="bag-handle-outline"></ion-icon>
                                 </button>
                             </div>
                         </div>
@@ -162,4 +162,46 @@ async function fetchItems() {
     }
 }
 
+async function fetchRooms() {
+    console.log("getting rooms");
+
+    try {
+        const response = await fetch('/rooms');
+        if (response.ok) {
+            const rooms = await response.json();
+            const productGrid = document.getElementById('room-grid');
+            productGrid.innerHTML = ''; // Clear existing content
+            rooms.forEach(room => {
+                const productHTML = `
+                    <div class="showcase">
+                        <div class="showcase-banner">
+                            <img src="https://cdn3d.iconscout.com/3d/premium/thumb/house-auction-7776734-6184505.png?f=webp" alt="" width="300" class="product-img default">
+                            <div class="showcase-actions">
+                                <button class="btn-action">
+                                    <ion-icon name="bag-handle-outline"></ion-icon>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="showcase-content">
+                            <a href="room.html?id=${room.id}">
+                                <h3 class="showcase-title">Seller ID: ${room.ownerId}</h3>
+                            </a>
+                            <div class="price-box">
+                                <p class="price">${room.name}</p>
+                            </div>
+                            <!--<p class="description"></p>-->
+                        </div>
+                    </div>
+                `;
+                productGrid.insertAdjacentHTML('beforeend', productHTML);
+            });
+        } else {
+            console.error('Error fetching rooms:', response.status);
+        }
+    } catch (error) {
+        console.error('Error during fetch request:', error);
+    }
+}
+
 document.addEventListener('DOMContentLoaded', fetchItems);
+document.addEventListener('DOMContentLoaded', fetchRooms);

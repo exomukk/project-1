@@ -10,7 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import javax.sql.DataSource;
-import java.util.List;
+import java.sql.*;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,11 +20,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -32,7 +28,6 @@ public class AuctionController {
     @Autowired
     private DataSource dataSource;
 
-    // Class chứa thông tin của một phòng đấu giá
     @Getter
     @Setter
     @Component
@@ -40,16 +35,14 @@ public class AuctionController {
         private String id;
         private String ownerId;
         private String name;
-        // Các thuộc tính khác nếu cần
     }
 
-    // Class chứa thông tin của một item
     @Getter
     @Setter
     @Component
     public static class ItemInfo {
         private String id;
-        private String roomId; // Thêm trường này để liên kết item với phòng đấu giá
+        private String roomId;
         private String name;
         private String price;
         private String description;
@@ -59,17 +52,68 @@ public class AuctionController {
 
     // API để tạo một phòng đấu giá mới
     @PostMapping("/auction-rooms/create")
-    public ResponseEntity<AuctionRoom> createAuctionRoom(@RequestBody AuctionRoom auctionRoom) {
-        // Logic để tạo một phòng đấu giá mới và lưu vào cơ sở dữ liệu
-        // ...
-        return ResponseEntity.status(HttpStatus.CREATED).body(auctionRoom);
+    public ResponseEntity<Map<String, String>> createAuctionRoom(@RequestBody AuctionRoom auctionRoom, @RequestParam("ownerId") String ownerId) {
+        auctionRoom.setOwnerId(ownerId);
+        Map<String, String> response = new HashMap<>();
+        String checkRoomExistsQuery = "SELECT COUNT(*) FROM master.dbo.[auctionRoom] WHERE ownerId = ? AND name = ?";
+
+        try (Connection conn = dataSource.getConnection()) {
+            // Kiểm tra xem phòng với ownerId hay name đã tồn tại chưa ?
+            try (PreparedStatement checkRoomExistsStmt = conn.prepareStatement(checkRoomExistsQuery)) {
+                checkRoomExistsStmt.setString(1, auctionRoom.getOwnerId());
+                checkRoomExistsStmt.setString(2, auctionRoom.getName());
+
+                try (ResultSet resultSet = checkRoomExistsStmt.executeQuery()) {
+                    if (resultSet.next() && resultSet.getInt(1) > 0) {
+                        // Nếu phòng tồn tại
+                        response.put("message", "Tên phòng đã tồn tại");
+                        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+                    }
+                }
+            }
+
+            // Nếu không tồn tại -> Tạo phòng mới
+            String createRoomQuery = "INSERT INTO master.dbo.[auctionRoom] (ownerId, name) VALUES (?, ?)";
+            try (PreparedStatement createRoomStmt = conn.prepareStatement(createRoomQuery, Statement.RETURN_GENERATED_KEYS)) {
+                createRoomStmt.setString(1, auctionRoom.getOwnerId());
+                createRoomStmt.setString(2, auctionRoom.getName());
+
+                int rowsAffected = createRoomStmt.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    try (ResultSet generatedKeys = createRoomStmt.getGeneratedKeys()) {
+                        if (generatedKeys.next()) {
+                            // Thiết lập ID cho auctionRoom từ khóa được tạo tự động
+                            auctionRoom.setId(String.valueOf(generatedKeys.getLong(1)));
+                            System.out.println("Room created successfully, id: " + auctionRoom.getId());
+                            // Trả về đối tượng AuctionRoom với ID đã được thiết lập
+                            response.put("message", auctionRoom.getId());
+                            return ResponseEntity.ok(response);
+                        }
+                    }
+                } else {
+                    System.out.println("Room creation failed");
+                    response.put("message", "Room creation failed");
+                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            response.put("message", "Error during connecting: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+        // Trường hợp không xảy ra lỗi nhưng không tạo được phòng
+        response.put("message", "Could not create the room");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
+
+
 
     // API để lấy danh sách các items trong một phòng đấu giá cụ thể
     @GetMapping("/auction-rooms/{roomId}/items")
     public ResponseEntity<List<ItemInfo>> getItemsInRoom(@PathVariable String roomId) {
         List<ItemInfo> items = new ArrayList<>();
-        String query = "SELECT id, name, price, description, openTime, imageLink FROM items WHERE roomId = ?";
+        String query = "SELECT id, name, price, description, openTime, imageLink FROM [items] WHERE roomId = ?";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setString(1, roomId);
@@ -99,7 +143,4 @@ public class AuctionController {
         // ...
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
-
-    // Các phương thức khác để quản lý phòng đấu giá và items
-    // ...
 }

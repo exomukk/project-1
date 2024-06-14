@@ -5,17 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
-    <link rel="stylesheet" href="assets/css/login.css">
+    <link rel="stylesheet" href="assets/css/add_room.css">
     <link rel="shortcut icon" href="#">
 </head>
 
 <body>
     <div class="c2">
-        <form class="signin" onsubmit="event.preventDefault(); submitForm();">
+        <form class="signin" onsubmit="event.preventDefault(); createRoom();">
             <h1 class="signup1">CREATE ROOM</h1>
             <br><br><br><br>
             <label>
-                <input type="text" placeholder="Username*" class="username" required/>
+                <input type="text" placeholder="Room Name*" class="roomName" id="roomName" required/>
             </label>
 
             <button type="submit" class="btn">Sumbit</button>
@@ -29,6 +29,6 @@
 </body>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="assets/js/login.js"></script>
+<script src="assets/js/add_room.js"></script>
 
 </html>
