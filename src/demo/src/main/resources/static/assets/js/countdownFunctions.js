@@ -52,7 +52,7 @@ export function startOpenCountdown(openTime, element) {
             clearInterval(intervalId);
             element.textContent = "NOW";
             // Gọi hàm để đưa item lên bảng lớn ở đây
-            moveItem(countdownContainer.closest('.showcase').getAttribute('data-item-id'));
+            moveItem(element.closest('.showcase').getAttribute('data-item-id'));
         }
     }, 1000);
 }
@@ -102,8 +102,7 @@ async function moveItem(itemId) {
 
             filteredItem.forEach(item => {
                 const productHTML = `
-                    <div class="showcase-container" data-item-id="${item.id}" onclick="openItem(${item.id})">
-                        <div class="showcase">
+                        <div class="showcase" data-item-id="${item.id}" onclick="openItem(${item.id})">
                             <div class="showcase-banner">
                                 <img src="${item.imageLink}"
                                     alt="" class="showcase-img">
@@ -167,7 +166,6 @@ async function moveItem(itemId) {
                                 </div>
                             </div>
                         </div>
-                    </div>
                 `;
                 productGrid.insertAdjacentHTML('beforeend', productHTML);
 
@@ -184,7 +182,17 @@ async function moveItem(itemId) {
 }
 
 // Delete item function - under construction
-function deleteItem(itemId) {
-    console.log('Deleting item with ID:', itemId);
-    // Add logic here
+async function deleteItem(itemId) {
+    console.log('Deleting item with API:', `/items/${itemId}/del`);
+    try {
+        const deleteResponse = await fetch(`/items/${itemId}/del`, {
+            method: 'DELETE'
+        });
+        console.log(deleteResponse);
+        if (deleteResponse.ok) {
+            console.log('delete ok');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
 }

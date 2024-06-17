@@ -141,6 +141,7 @@ public class Bidding {
                 }
                 System.out.println(names);
             }
+            System.out.println(ResponseEntity.status(HttpStatus.OK).body(names));
             return ResponseEntity.status(HttpStatus.OK).body(names);
         } catch (SQLException e) {
             throw new RuntimeException(e);

@@ -54,7 +54,8 @@ public class Login {
                     String storedPasswordHash = rs.getString("password");
                     if (hashedPassword.equals(storedPasswordHash)) {
                         long userId = rs.getLong("id");
-                        response.put("message", "Login success. User ID: " + userId);
+                        response.put("message", "Login successfully");
+                        response.put("userId", String.valueOf(userId));
                         return ResponseEntity.status(HttpStatus.OK).body(response);
                     } else {
                         response.put("message", "Login failed, please recheck your credentials");

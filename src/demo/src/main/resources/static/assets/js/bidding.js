@@ -1,5 +1,54 @@
 'use strict';
-import {startBigCountdown} from './countdownFunctions';
+
+// countdown function
+function startBigCountdown(endTime, countdownContainer) {
+    const end = new Date(endTime);
+
+    const intervalId = setInterval(() => {
+        const now = new Date();
+        const distance = end - now;
+
+        // Tính toán ngày, giờ, phút và giây
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Cập nhật HTML
+        countdownContainer.querySelector('.countdown-content:nth-child(1) .display-number').textContent = days;
+        countdownContainer.querySelector('.countdown-content:nth-child(2) .display-number').textContent = hours;
+        countdownContainer.querySelector('.countdown-content:nth-child(3) .display-number').textContent = minutes;
+        countdownContainer.querySelector('.countdown-content:nth-child(4) .display-number').textContent = seconds;
+
+        if (distance < 0) {
+            clearInterval(intervalId);
+            countdownContainer.innerHTML = '<p class="expired">EXPIRED</p>';
+            // Gọi hàm để xóa item ở đây
+            deleteItem(localStorage.getItem('itemId'));
+        }
+    }, 1000);
+}
+
+// Delete item function - under construction
+async function deleteItem(itemId) {
+    console.log('Deleting item with ID:', itemId);
+    try {
+        const deleteResponse = await fetch(`/items/${itemId}/del`, {
+            method: 'DELETE'
+        });
+        if (deleteResponse.ok) {
+            console.log('delete ok');
+            alert('This item has EXPIRED');
+            window.location.href = `homepage.html?id=${localStorage.getItem('userId')}`;
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+
+
+
 
 // Loading navbar functions
 document.addEventListener('DOMContentLoaded', function () {
@@ -234,8 +283,8 @@ async function buyInstance(itemId, userId) {
                     const userInfo = await buyerResponse.json();
                     console.log(userInfo);
                     userInfo.forEach(name => {
-                        console.log(`${name.name}`);
-                        alert('User "' + `${name.name}` + '" buy success, thank you for your purchase');
+                        console.log(`${name.username}`);
+                        alert('User "' + `${name.username}` + '" buy success, thank you for your purchase');
                         window.location.href = `homepage.html?id=${userId}`;
                     });
                 }
@@ -243,7 +292,7 @@ async function buyInstance(itemId, userId) {
                 console.error('Error:', error);
             }
         }
-        
+
     } catch (error) {
         console.error('Error:', error);
     }

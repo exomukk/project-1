@@ -67,7 +67,6 @@ public class Register {
                 registerStmt.setString(2, hashedPassword);
                 registerStmt.setString(3, loginInfo.phone);
                 registerStmt.setString(4, loginInfo.address);
-                // registerStmt.setBytes(5, loginInfo.avatar.getBytes());
 
                 int rowsAffected = registerStmt.executeUpdate();
 

@@ -66,7 +66,7 @@ public class Item {
     @PostMapping("/createItem")
     public ResponseEntity<Map<String, String>> createItem(@RequestBody ItemInfo itemInfo) {
         Map<String, String> response = new HashMap<>();
-        String insertQuery = "INSERT INTO master.dbo.[items] (name, price, bid_price, description, openTime, endTime, imageLink, roomId) VALUES (?, ?, ?, ?, DATEADD(HOUR, 1, GETDATE()), DATEADD(DAY, 1, DATEADD(HOUR, 1, GETDATE())), ?, ?)";
+        String insertQuery = "INSERT INTO master.dbo.[items] (name, price, bid_price, description, openTime, endTime, imageLink, roomId) VALUES (?, ?, ?, ?, DATEADD(DAY, 1, GETDATE()), DATEADD(DAY, 1, DATEADD(DAY, 1, GETDATE())), ?, ?)";
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS)) {

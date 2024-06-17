@@ -532,8 +532,8 @@
                     <!-- PRODUCT FEATURED -->
                     <div class="product-featured">
                         <h2 class="title">Join now !!!</h2>
-                        <div class="showcase-wrapper has-scrollbar" id="showcase-big-thingy">
-                            <div class="showcase-container">
+                        <div class="showcase-wrapper has-scrollbar">
+                            <div class="showcase-container" id="showcase-big-thingy">
                                 <div class="showcase">
                                     <div class="showcase-banner">
                                         <img src="https://product.hstatic.net/200000478869/product/phoenix-images-container_hae_h2e_9234032689182_basiliskv-3-1500x1000-2_092b40f62f524a93b16b89bb448a2793.jpg"
@@ -623,58 +623,6 @@
                         <h2 class="title">Products</h2>
 
                         <div class="product-grid" id="product-grid">
-
-                            <!-- <div class="showcase">
-
-                                <div class="showcase-banner">
-
-                                    <img src="https://product.hstatic.net/1000287389/product/ges-container_h36_h7a_9261073006622_razer-blackwidow-v3-1500x1000-0-v3_6a35d09a17404684922fc68ebfe8eb23_master.jpg"
-                                        alt="" width="300" class="product-img default">
-                                    <img src="https://product.hstatic.net/1000287389/product/ges-container_h36_h7a_9261073006622_razer-blackwidow-v3-1500x1000-0-v3_6a35d09a17404684922fc68ebfe8eb23_master.jpg"
-                                        alt="" width="300" class="product-img hover">
-
-                                    <p class="showcase-badge">15%</p>
-
-                                    <div class="showcase-actions">
-
-                                        <button class="btn-action">
-                                            <ion-icon name="eye-outline"></ion-icon>
-                                        </button>
-
-                                    </div>
-
-                                </div>
-
-                                <div class="showcase-content">
-
-                                    <a href="#" class="showcase-category">keyboard</a>
-
-                                    <a href="#">
-                                        <h3 class="showcase-title">Razer BlackWidow v3</h3>
-                                    </a>
-
-                                    <div class="showcase-rating">
-                                        <ion-icon name="star"></ion-icon>
-                                        <ion-icon name="star"></ion-icon>
-                                        <ion-icon name="star"></ion-icon>
-                                        <ion-icon name="star-outline"></ion-icon>
-                                        <ion-icon name="star-outline"></ion-icon>
-                                    </div>
-
-                                    <div class="price-box">
-                                        <p class="price">$48.00</p>
-                                        <del>$75.00</del>
-                                    </div>
-
-                                    <div class="price-box">
-                                        <p class="price">Open in: </p>
-                                        <p>12:59:59</p>
-                                    </div>
-
-                                </div>
-
-                            </div> -->
-
                         </div>
 
 
@@ -875,14 +823,52 @@
     </footer>
 
     <!-- custom js link -->
-    <script src="./assets/js/homepage.js"></script>
+    <script type="module" src="./assets/js/homepage.js"></script>
 
     <!-- ionicon link -->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
     <!-- custom js -->
-    <script></script>
+    <script>
+        // Dropdown function in navbar
+        document.addEventListener('DOMContentLoaded', function () {
+            // get userID conditions
+            const userId = localStorage.getItem('userId');
+            if (userId) {
+                document.getElementById('login-link').style.display = 'none';
+                document.getElementById('register-link').style.display = 'none';
+                document.getElementById('logout-link').style.display = 'block';
+                document.getElementById('profile-link').style.display = 'block';
+                document.getElementById('room-link').style.display = 'block';
+            }
+        });
+
+        function toggleDropdown() {
+            const dropdown = document.getElementById('dropdown-content-header');
+            dropdown.style.visibility = dropdown.style.visibility === 'hidden' ? 'visible' : 'hidden';
+        }
+
+        function logout() {
+            localStorage.removeItem('userId');
+            window.location.href = `homepage.html`;
+        }
+
+        function editProfile() {
+            const userId = localStorage.getItem('userId');
+            window.location.href = `profile.html?id=${userId}`;
+        }
+
+        function openItem(itemId) {
+            const userId = localStorage.getItem('userId');
+            if (userId) {
+                localStorage.setItem('itemId', itemId);
+                window.location.href = `bidding.html?id=${itemId}`;
+            } else {
+                alert('You must be logged in to bid on items.');
+            }
+        }
+    </script>
 </body>
 
 </html>

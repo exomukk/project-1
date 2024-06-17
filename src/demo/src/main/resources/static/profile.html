@@ -93,21 +93,43 @@
 
         <div class="header-main">
             <div class="container">
-                <a href="homepage.html" class="header-logo">
-                    <h3 style="color: black !important;" class="header-logo">Auction Website</h3>
+                <a href="#" class="header-logo">
+                    <h3 style="color: black !important;">Auction Website</h3>
                 </a>
 
-                <div class="header-user-actions">
-
-                    <button class="action-btn">
-                        <ion-icon name="person-outline"></ion-icon>
+                <div class="header-search-container">
+                    <input type="search" name="search" class="search-field" placeholder="Enter your product name...">
+                    <button class="search-btn">
+                        <ion-icon name="search-outline"></ion-icon>
                     </button>
+                </div>
 
-                    <button class="action-btn">
+                <div class="header-user-actions">
+                    <div class="dropdown-header" style="position: relative; display: inline-block;">
+                        <button class="action-btn" onclick="toggleDropdown()">
+                            <ion-icon name="person-outline"></ion-icon>
+                        </button>
+                        <div id="dropdown-content-header" class="dropdown-content-header" style="
+                                visibility: hidden;
+                                position: absolute;
+                                background-color: #f9f9f9;
+                                min-width: 160px;
+                                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                                padding: 12px 16px;
+                                z-index: 1;">
+                            <a id="login-link" href="login.html" style="color: black;">Login</a>
+                            <a id="register-link" href="register.html" style="color: black;">Register</a>
+                            <a id="logout-link" href="#" style="color: black; display: none;"
+                               onclick="logout()">Logout</a>
+                            <a id="profile-link" href="#" style="color: black; display: none;"
+                               onclick="editProfile()">Profile</a>
+                        </div>
+                    </div>
+
+                    <!-- <button class="action-btn">
                         <ion-icon name="bag-handle-outline"></ion-icon>
                         <span class="count">0</span>
-                    </button>
-
+                    </button> -->
                 </div>
             </div>
         </div>
@@ -238,6 +260,36 @@
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
+    <!--custom js-->
+    <script>
+        // Dropdown function for login logout
+        document.addEventListener('DOMContentLoaded', function () {
+            // get userID conditions
+            const userId = localStorage.getItem('userId');
+            if (userId) {
+                document.getElementById('login-link').style.display = 'none';
+                document.getElementById('register-link').style.display = 'none';
+                document.getElementById('logout-link').style.display = 'block';
+                document.getElementById('profile-link').style.display = 'block';
+                document.getElementById('room-link').style.display = 'block';
+            }
+        });
+
+        function toggleDropdown() {
+            const dropdown = document.getElementById('dropdown-content-header');
+            dropdown.style.visibility = dropdown.style.visibility === 'hidden' ? 'visible' : 'hidden';
+        }
+
+        function logout() {
+            localStorage.removeItem('userId');
+            window.location.href = `homepage.html`;
+        }
+
+        function editProfile() {
+            const userId = localStorage.getItem('userId');
+            window.location.href = `profile.html?id=${userId}`;
+        }
+    </script>
 </body>
 
 </html>

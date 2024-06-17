@@ -1,5 +1,5 @@
 'use strict';
-import {countdownFunctions, startOpenCountdown} from './countdownFunctions';
+import {countdownFunctions, startOpenCountdown} from './countdownFunctions.js';
 
 // modal variables
 const modal = document.querySelector('[data-modal]');
@@ -93,32 +93,32 @@ for (let i = 0; i < accordionBtn.length; i++) {
 
 
 // Dropdown function in navbar
-document.addEventListener('DOMContentLoaded', function () {
-    // get userID conditions
-    const userId = localStorage.getItem('userId');
-    if (userId) {
-        document.getElementById('login-link').style.display = 'none';
-        document.getElementById('register-link').style.display = 'none';
-        document.getElementById('logout-link').style.display = 'block';
-        document.getElementById('profile-link').style.display = 'block';
-        document.getElementById('room-link').style.display = 'block';
-    }
-});
-
-function toggleDropdown() {
-    const dropdown = document.getElementById('dropdown-content-header');
-    dropdown.style.visibility = dropdown.style.visibility === 'hidden' ? 'visible' : 'hidden';
-}
-
-function logout() {
-    localStorage.removeItem('userId');
-    window.location.href = `homepage.html`;
-}
-
-function editProfile() {
-    const userId = localStorage.getItem('userId');
-    window.location.href = `profile.html?id=${userId}`;
-}
+// document.addEventListener('DOMContentLoaded', function () {
+//     // get userID conditions
+//     const userId = localStorage.getItem('userId');
+//     if (userId) {
+//         document.getElementById('login-link').style.display = 'none';
+//         document.getElementById('register-link').style.display = 'none';
+//         document.getElementById('logout-link').style.display = 'block';
+//         document.getElementById('profile-link').style.display = 'block';
+//         document.getElementById('room-link').style.display = 'block';
+//     }
+// });
+//
+// function toggleDropdown() {
+//     const dropdown = document.getElementById('dropdown-content-header');
+//     dropdown.style.visibility = dropdown.style.visibility === 'hidden' ? 'visible' : 'hidden';
+// }
+//
+// function logout() {
+//     localStorage.removeItem('userId');
+//     window.location.href = `homepage.html`;
+// }
+//
+// function editProfile() {
+//     const userId = localStorage.getItem('userId');
+//     window.location.href = `profile.html?id=${userId}`;
+// }
 
 
 
@@ -234,12 +234,12 @@ document.addEventListener('DOMContentLoaded', fetchRooms);
 
 // User can open item only when user ID in local storage is defined
 // If userId in local storage = undefined means user haven't login yet -> Can't open item to bid
-function openItem(itemId) {
-    const userId = localStorage.getItem('userId');
-    if (userId) {
-        localStorage.setItem('itemId', itemId);
-        window.location.href = `bidding.html?id=${itemId}`;
-    } else {
-        alert('You must be logged in to bid on items.');
-    }
-}
+// function openItem(itemId) {
+//     const userId = localStorage.getItem('userId');
+//     if (userId) {
+//         localStorage.setItem('itemId', itemId);
+//         window.location.href = `bidding.html?id=${itemId}`;
+//     } else {
+//         alert('You must be logged in to bid on items.');
+//     }
+// }
