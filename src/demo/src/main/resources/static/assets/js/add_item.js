@@ -1,8 +1,6 @@
-function getUserIdFromUrl() {
-    const queryParams = new URLSearchParams(window.location.search);
-    return queryParams.get('id');
-}
+'use strict';
 
+// Fetch room for the dropdown to choose rooms
 async function fetchRooms() {
     console.log("trying to get room data");
     const userId = localStorage.getItem('userId');
@@ -28,10 +26,19 @@ async function fetchRooms() {
     }
 }
 
+document.addEventListener('DOMContentLoaded', fetchRooms);
+
+
+
+
+
+
+// create item functions
 async function createItem() {
     const roomSelect = document.getElementById('roomSelect').value;
     const itemName = document.getElementById('itemName').value;
     const itemPrice = document.getElementById('itemPrice').value;
+    const itemBidPrice = document.getElementById('itemBidPrice').value;
     const itemDescription = document.getElementById('itemDescription').value;
     const itemImageLink = document.getElementById('itemImageLink').value;
 
@@ -39,6 +46,7 @@ async function createItem() {
         roomId: roomSelect,
         name: itemName,
         price: itemPrice,
+        bid_price: itemBidPrice,
         description: itemDescription,
         imageLink: itemImageLink
     };
@@ -67,5 +75,3 @@ async function createItem() {
         alert('An error occurred. Please try again.');
     }
 }
-
-document.addEventListener('DOMContentLoaded', fetchRooms);

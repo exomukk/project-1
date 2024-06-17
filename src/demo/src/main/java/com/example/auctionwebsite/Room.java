@@ -54,7 +54,7 @@ public class Room {
         }
     }
 
-    // API để lấy danh sách các rooms của một user cụ thể
+    // Get item from a specific room
     @GetMapping("/user/{userId}/addItems")
     public ResponseEntity<List<RoomInfo>> getRoomsFromUser(@PathVariable String userId) {
         System.out.println("user ID: " + userId);

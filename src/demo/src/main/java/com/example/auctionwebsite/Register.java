@@ -33,7 +33,6 @@ public class Register {
         private String password;
         private String phone;
         private String address;
-//        private MultipartFile avatar;
     }
 
     @PostMapping("/register.app")
@@ -76,7 +75,8 @@ public class Register {
                     try (ResultSet generatedKeys = registerStmt.getGeneratedKeys()) {
                         if (generatedKeys.next()) {
                             long userId = generatedKeys.getLong(1);
-                            response.put("message", "Register success. User ID: " + userId);
+                            response.put("message", "Register successfully !");
+                            response.put("userId", String.valueOf(userId));
                             System.out.println("Response successfully");
                             return ResponseEntity.ok(response);
                         }
@@ -90,8 +90,6 @@ public class Register {
         } catch (SQLException e) {
             throw new RuntimeException("Error during registration", e);
         }
-
-        // Add a default return statement
         response.put("message", "Unexpected error");
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }

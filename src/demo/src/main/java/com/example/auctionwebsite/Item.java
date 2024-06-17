@@ -31,6 +31,7 @@ public class Item {
         private String roomId;
         private String name;
         private String price;
+        private String bid_price;
         private String description;
         private String openTime;
         private String endTime;
@@ -65,16 +66,17 @@ public class Item {
     @PostMapping("/createItem")
     public ResponseEntity<Map<String, String>> createItem(@RequestBody ItemInfo itemInfo) {
         Map<String, String> response = new HashMap<>();
-        String insertQuery = "INSERT INTO master.dbo.[items] (name, price, description, openTime, endTime, imageLink, roomId) VALUES (?, ?, ?, DATEADD(HOUR, 1, GETDATE()), DATEADD(DAY, 1, DATEADD(HOUR, 1, GETDATE())), ?, ?)";
+        String insertQuery = "INSERT INTO master.dbo.[items] (name, price, bid_price, description, openTime, endTime, imageLink, roomId) VALUES (?, ?, ?, ?, DATEADD(HOUR, 1, GETDATE()), DATEADD(DAY, 1, DATEADD(HOUR, 1, GETDATE())), ?, ?)";
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, itemInfo.getName());
             ps.setString(2, itemInfo.getPrice());
-            ps.setString(3, itemInfo.getDescription());
+            ps.setString(3, itemInfo.getBid_price());
+            ps.setString(4, itemInfo.getDescription());
             // openTime và endTime được thiết lập tự động trong câu truy vấn
-            ps.setString(4, itemInfo.getImageLink());
-            ps.setString(5, itemInfo.getRoomId());
+            ps.setString(5, itemInfo.getImageLink());
+            ps.setString(6, itemInfo.getRoomId());
 
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected > 0) {

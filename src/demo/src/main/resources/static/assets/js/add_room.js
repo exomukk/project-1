@@ -1,3 +1,5 @@
+'use strict';
+
 async function createRoom() {
     const userId = localStorage.getItem('userId');
     const roomName = document.getElementById('roomName').value;
