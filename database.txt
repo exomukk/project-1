@@ -1,0 +1,34 @@
+USE master;
+GO
+
+CREATE TABLE dbo.[user] (
+                            id INT IDENTITY(1,1) PRIMARY KEY,
+                            username VARCHAR(50),
+                            password VARCHAR(MAX),
+                            phone VARCHAR(20),
+                            address VARCHAR(MAX)
+);
+
+CREATE TABLE dbo.items (
+                           id INT IDENTITY(1,1) PRIMARY KEY,
+                           name VARCHAR(50),
+                           roomId VARCHAR(50),
+                           price DECIMAL(18, 2),
+                           bid_price DECIMAL(18, 2),
+                           description VARCHAR(MAX),
+                           openTime DATETIME,
+                           endTime DATETIME,
+                           imageLink VARCHAR(MAX)
+);
+
+CREATE TABLE dbo.items (
+                           id INT IDENTITY(1,1) PRIMARY KEY,
+                           name VARCHAR(50),
+                           roomId VARCHAR(50),
+                           price DECIMAL(18, 2),
+                           bid_price DECIMAL(18, 2),
+                           description VARCHAR(MAX),
+                           openTime DATETIME
+                           endTime DATETIME
+                           imageLink VARCHAR(MAX)
+);
