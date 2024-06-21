@@ -1,22 +1,61 @@
-# project - 1
+# Auction Website Project
 
-## Auction Website
+## Purpose:
+This project aims to build an online auction platform where users can buy and sell products through online auction sessions.
 
-### Description:
-- A small MVC project
-- The 2 developers coded this up is swimming in deadlines
+## Key Features:
+- User registration and profile management.
+- Creating and managing auction sessions.
+- Real-time bidding and auction status tracking.
+- Payment processing and transaction management (under construction).
 
-### Member & Assignment:
-- Ngô Anh Quân: Leader, Backend for `Login` functions, `Bidding` functions
-- Trần Đăng Huy: Co-Leader, main UX-UI, Frontend for `Login` functions, `Register` functions, 
-`Homepage` functions, `Profile` functions, `Auction Room` functions, `Bidding` functions
+## Technologies Used:
+- Frontend: JavaScript
+- Backend: Java, Spring Boot
+- Database: MS-SQL Server
+- Build Tools: Maven
+- Development Tools: Intellij IDEA, Visual Studio Code, Git
 
-### Tech stacks:
-- Frontend: HTML, CSS, JavaScript
-- Backend: Java
-- Maven Build Tools
-- IntelliJ IDEA Ultimate 2024 & Visual Studio Code
-- Docker
+## Code Structure:
+```
+├───src
+│   ├───main
+│   │   ├───java
+│   │   │   └───com
+│   │   │       └───example
+│   │   │           └───auctionwebsite
+│   │   │               ├───controller
+│   │   │               └───model
+│   │   └───resources
+│   │       └───static
+│   │           └───assets
+│   │               ├───css
+│   │               ├───images
+│   │               │   ├───icons
+│   │               │   └───logo
+│   │               └───js
+│   └───test
+│       └───java
+│           └───com
+│               └───example
+│                   └───auctionwebsite
+└───target
+    ├───classes
+    │   ├───com
+    │   │   └───example
+    │   │       └───auctionwebsite
+    │   │           ├───controller
+    │   │           └───model
+    │   └───static
+    │       └───assets
+    │           ├───css
+    │           ├───images
+    │           │   ├───icons
+    │           │   └───logo
+    │           └───js
+    └───generated-sources
+        └───annotations
+```
 
 ### How to run ?
 - Clone this repository
@@ -25,7 +64,12 @@
 - Run class `AuctiononlineApplication` in `./demo/src/main/java/com/example/demo` to run the backend
 - Open localhost `http://localhost/-port-` to open the website
 
+### Authors:
+- Huy Trần
+- Quân Ngô
+
+### License:
+This project is licensed under the MIT License - see the LICENSE.md file for details.
+
 ### Screenshot:
 ![screenshoot](./Screenshot%202024-06-08%20014425.png)
-
-P/S: The website is 95% done (18/6/2024)
