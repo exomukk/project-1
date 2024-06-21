@@ -93,7 +93,7 @@ public class Register {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
 
-    // For the same reason in Login.java, idk how to implement the BCryptPasswordEncoder so... here's go SHA-256
+    // For the same reason in LoginController.java, idk how to implement the BCryptPasswordEncoder so... here's go SHA-256
     private String encodePassword(String password) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");

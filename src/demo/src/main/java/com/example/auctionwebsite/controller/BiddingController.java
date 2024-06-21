@@ -1,11 +1,10 @@
 package com.example.auctionwebsite;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.example.auctionwebsite.model.ItemInfo;
+import com.example.auctionwebsite.model.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import javax.sql.DataSource;
@@ -19,29 +18,6 @@ import java.util.Map;
 public class Bidding {
     @Autowired
     private DataSource dataSource;
-
-    @Getter
-    @Setter
-    @Component
-    public static class ItemInfo {
-        private String id;
-        private String roomId;
-        private String name;
-        private String price;
-        private String bid_price;
-        private String description;
-        private String openTime;
-        private String endTime;
-        private String imageLink;
-    }
-
-    @Getter
-    @Setter
-    @Component
-    public static class UserInfo {
-        private String id;
-        private String username;
-    }
 
     @GetMapping("/bid/{id}")
     public ResponseEntity<List<ItemInfo>> getBidItems(@PathVariable String id) {
@@ -133,7 +109,7 @@ public class Bidding {
             ps.setString(1, userId);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    Bidding.UserInfo item = new Bidding.UserInfo();
+                    UserInfo item = new UserInfo();
                     item.setId(userId);
                     item.setUsername(rs.getString("username"));
                     System.out.println(rs.getString("username"));
