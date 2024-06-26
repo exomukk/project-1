@@ -832,6 +832,78 @@
     <!-- custom js -->
     <script>
         // Dropdown function in navbar
+        // document.addEventListener('DOMContentLoaded', async function () {
+        //     try {
+        //         const response = await fetch('/auth/status', { credentials: 'include' });
+        //         if (response.ok) {
+        //             const user = await response.json();
+        //             document.getElementById('login-link').style.display = 'none';
+        //             document.getElementById('register-link').style.display = 'none';
+        //             document.getElementById('logout-link').style.display = 'block';
+        //             document.getElementById('profile-link').style.display = 'block';
+        //             // document.getElementById('room-link').style.display = 'block';
+        //         } else {
+        //             document.getElementById('login-link').style.display = 'block';
+        //             document.getElementById('register-link').style.display = 'block';
+        //             document.getElementById('logout-link').style.display = 'none';
+        //             document.getElementById('profile-link').style.display = 'none';
+        //             // document.getElementById('room-link').style.display = 'none';
+        //         }
+        //     } catch (error) {
+        //         console.error('Error checking authentication status:', error);
+        //     }
+        // });
+        //
+        // function toggleDropdown() {
+        //     const dropdown = document.getElementById('dropdown-content-header');
+        //     dropdown.style.visibility = dropdown.style.visibility === 'hidden' ? 'visible' : 'hidden';
+        // }
+        //
+        // async function logout() {
+        //     try {
+        //         const response = await fetch('/logout.app', {
+        //             method: 'POST',
+        //             credentials: 'include'
+        //         });
+        //         if (response.ok) {
+        //             window.location.href = 'index.html';
+        //         } else {
+        //             alert('Logout failed.');
+        //         }
+        //     } catch (error) {
+        //         console.error('Error during logout:', error);
+        //         alert('An error occurred. Please try again.');
+        //     }
+        // }
+        //
+        // async function editProfile() {
+        //     try {
+        //         const response = await fetch('/auth/status', { credentials: 'include' });
+        //         if (response.ok) {
+        //             const user = await response.json();
+        //             window.location.href = `profile.html?id=${user.userId}`;
+        //         } else {
+        //             alert('You must be logged in to edit your profile.');
+        //         }
+        //     } catch (error) {
+        //         console.error('Error checking authentication status:', error);
+        //         alert('An error occurred. Please try again.');
+        //     }
+        // }
+        //
+        // async function openItem(itemId) {
+        //     try {
+        //         const response = await fetch('/auth/status', { credentials: 'include' });
+        //         if (response.ok) {
+        //             window.location.href = `bidding.html?id=${itemId}`;
+        //         } else {
+        //             alert('You must be logged in to bid on items.');
+        //         }
+        //     } catch (error) {
+        //         console.error('Error checking authentication status:', error);
+        //         alert('An error occurred. Please try again.');
+        //     }
+        // }
         document.addEventListener('DOMContentLoaded', function () {
             // get userID conditions
             const userId = localStorage.getItem('userId');

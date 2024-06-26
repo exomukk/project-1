@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="assets/css/add_item.css">
+    <link rel="shortcut icon" href="#">
+</head>
+
+<body>
+<div class="c2">
+    <form class="signin" onsubmit="event.preventDefault(); deleteRoom();">
+        <h1 class="signup1">DELETE ROOM</h1>
+        <br><br>
+        <label>
+            <select id="roomSelect" class="createItem" required>
+                <option value="">Select Room*</option>
+            </select>
+        </label>
+
+        <button type="submit" class="btn">Delete</button>
+
+        <a href="index.html">
+            <p class="signup2">Back to home page</p>
+        </a>
+    </form>
+</div>
+</body>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="assets/js/delete_room.js"></script>
+
+</html>

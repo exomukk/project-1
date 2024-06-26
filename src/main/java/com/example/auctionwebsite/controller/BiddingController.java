@@ -23,7 +23,7 @@ public class BiddingController {
     public ResponseEntity<List<ItemInfo>> getBidItems(@PathVariable String id) {
         System.out.println("eagle callin birdy");
         List<ItemInfo> items = new ArrayList<>();
-        String query = "SELECT name, roomId, price, bid_price, description, openTime, endTime, imageLink FROM items WHERE id = ?";
+        String query = "SELECT name, roomId, price, bid_price, description, openTime, endTime, imageLink, highestBidder FROM items WHERE id = ?";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setString(1, id);
@@ -39,6 +39,7 @@ public class BiddingController {
                     item.setOpenTime(rs.getString("openTime"));
                     item.setEndTime(rs.getString("endTime"));
                     item.setImageLink(rs.getString("imageLink"));
+                    item.setHighestBidder(rs.getString("highestBidder"));
                     items.add(item);
                 }
             }
@@ -49,28 +50,40 @@ public class BiddingController {
     }
 
     @PostMapping("/bid/{id}")
-    public ResponseEntity<Map<String, String>> updateBidPrice(@PathVariable String id, @RequestBody Map<String, Object> payload) {
-        System.out.println("eagle callin birdy connected");
+    public ResponseEntity<Map<String, String>> bid(@PathVariable String id, @RequestBody Map<String, Object> bidInfo) {
         Map<String, String> response = new HashMap<>();
-        String newBidPrice = String.valueOf(payload.get("bidPrice"));
-        String query = "UPDATE items SET bid_price = ? WHERE id = ? AND bid_price < ?";
+        double bidPrice = Double.parseDouble(bidInfo.get("bidPrice").toString());
+        String highestBidder = bidInfo.get("highestBidder").toString();
+
+        String selectQuery = "SELECT bid_price FROM master.dbo.[items] WHERE id = ?";
+        String updateQuery = "UPDATE master.dbo.[items] SET bid_price = ?, highestBidder = ? WHERE id = ?";
+
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement(query)) {
-            ps.setString(1, newBidPrice);
-            ps.setString(2, id);
-            ps.setString(3, newBidPrice);
-            int updatedRows = ps.executeUpdate();
-            if (updatedRows > 0) {
-                System.out.println("bid success");
-                response.put("message", "Bid updated successfully");
-                return ResponseEntity.ok(response);
-            } else {
-                System.out.println("bid under price");
-                response.put("error", "Error: You must bid higher");
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+             PreparedStatement selectPs = conn.prepareStatement(selectQuery)) {
+            selectPs.setString(1, id);
+            try (ResultSet rs = selectPs.executeQuery()) {
+                if (rs.next()) {
+                    double currentBidPrice = rs.getDouble("bid_price");
+                    if (bidPrice > currentBidPrice) {
+                        try (PreparedStatement updatePs = conn.prepareStatement(updateQuery)) {
+                            updatePs.setDouble(1, bidPrice);
+                            updatePs.setString(2, highestBidder);
+                            updatePs.setString(3, id);
+                            updatePs.executeUpdate();
+                            response.put("message", "Bid placed successfully");
+                            return ResponseEntity.ok(response);
+                        }
+                    } else {
+                        response.put("message", "Error: You must bid higher 1$ than the current price");
+                        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+                    }
+                } else {
+                    response.put("message", "Item not found");
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+                }
             }
         } catch (SQLException e) {
-            response.put("error", e.getMessage());
+            response.put("message", "SQL error: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }

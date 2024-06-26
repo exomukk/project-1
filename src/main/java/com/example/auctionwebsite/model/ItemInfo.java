@@ -17,4 +17,6 @@ public class ItemInfo {
     private String openTime;
     private String endTime;
     private String imageLink;
+    private String sellerUserName;
+    private String highestBidder;
 }

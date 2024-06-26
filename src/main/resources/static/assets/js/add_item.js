@@ -41,34 +41,43 @@ async function createItem() {
     const itemBidPrice = document.getElementById('itemBidPrice').value;
     const itemDescription = document.getElementById('itemDescription').value;
     const itemImageLink = document.getElementById('itemImageLink').value;
+    const userId = localStorage.getItem('userId');
 
-    const createInfo = {
-        roomId: roomSelect,
-        name: itemName,
-        price: itemPrice,
-        bid_price: itemBidPrice,
-        description: itemDescription,
-        imageLink: itemImageLink
-    };
-
-    console.log(createInfo)
     try {
-        const response = await fetch('/createItem', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(createInfo)
-        });
-
-        if (response.status === 200) {
-
+        const userNameResponse = await fetch(`/getUserName?userId=${userId}`);
+        if (userNameResponse.status === 200) {
+            const sellerUserName = await userNameResponse.text();
+            const createInfo = {
+                roomId: roomSelect,
+                name: itemName,
+                price: itemPrice,
+                bid_price: itemBidPrice,
+                description: itemDescription,
+                imageLink: itemImageLink,
+                sellerUserName: sellerUserName,
+                highestBidder: null // Assuming it's null when the item is created
+            };
+            console.log(createInfo);
+            const response = await fetch('/createItem', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(createInfo)
+            });
+            if (response.status === 201) {
+                // Handle successful item creation
+                alert("Create item success");
+                window.location.href = `index.html?id=${userId}`;
+            } else {
+                const data = await response.json();
+                console.log(data);
+                console.log(response);
+                // Handle other error cases
+                alert(data.message || 'An unknown error occurred.');
+            }
         } else {
-            const data = await response.json();
-            console.log(data);
-            console.log(response);
-            // Xử lý các trường hợp lỗi khác
-            alert(data.message || 'An unknown error occurred.');
+            throw new Error('Failed to get user name');
         }
     } catch (error) {
         console.error('Error during create request:', error);

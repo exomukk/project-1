@@ -1,13 +1,11 @@
 package com.example.auctionwebsite.controller;
 
 import com.example.auctionwebsite.model.ItemInfo;
+import com.example.auctionwebsite.model.RoomInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -47,10 +45,29 @@ public class ItemController {
         }
     }
 
+    @GetMapping("/getUserName")
+    public ResponseEntity<String> getUserName(@RequestParam String userId) {
+        String query = "SELECT username FROM [user] WHERE id = ?";
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setString(1, userId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return ResponseEntity.ok(rs.getString("username"));
+                } else {
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+                }
+            }
+        } catch (SQLException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("SQL error: " + e.getMessage());
+        }
+    }
+
     @PostMapping("/createItem")
     public ResponseEntity<Map<String, String>> createItem(@RequestBody ItemInfo itemInfo) {
         Map<String, String> response = new HashMap<>();
-        String insertQuery = "INSERT INTO master.dbo.[items] (name, price, bid_price, description, openTime, endTime, imageLink, roomId) VALUES (?, ?, ?, ?, DATEADD(DAY, 1, GETDATE()), DATEADD(DAY, 1, DATEADD(DAY, 1, GETDATE())), ?, ?)";
+        String insertQuery = "INSERT INTO master.dbo.[items] (name, price, bid_price, description, openTime, endTime, imageLink, roomId, sellerUserName, highestBidder) VALUES (?, ?, ?, ?, DATEADD(DAY, 1, GETDATE()), DATEADD(DAY, 1, DATEADD(DAY, 1, GETDATE())), ?, ?, ?, ?)";
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS)) {
@@ -61,6 +78,8 @@ public class ItemController {
             // openTime và endTime được thiết lập tự động trong câu truy vấn
             ps.setString(5, itemInfo.getImageLink());
             ps.setString(6, itemInfo.getRoomId());
+            ps.setString(7, itemInfo.getSellerUserName());
+            ps.setString(8, itemInfo.getHighestBidder());
 
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected > 0) {
@@ -79,6 +98,66 @@ public class ItemController {
         } catch (SQLException e) {
             response.put("message", "SQL error: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+
+    @DeleteMapping("/delItem/{itemId}")
+    public ResponseEntity<Map<String, String>> deleteItem(@PathVariable String itemId) {
+        Map<String, String> response = new HashMap<>();
+        String query = "DELETE FROM items WHERE id = ?";
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setString(1, itemId);
+            int deletedRows = ps.executeUpdate();
+
+            if (deletedRows > 0) {
+                response.put("message", "Item deleted successfully");
+                return ResponseEntity.ok(response);
+            } else {
+                response.put("message", "Item not found");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+            }
+        } catch (SQLException e) {
+            response.put("message", "SQL error: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+
+    @GetMapping("/delItem/{userId}")
+    public ResponseEntity<List<ItemInfo>> getItemsForDeletion(@PathVariable String userId) {
+        List<ItemInfo> items = new ArrayList<>();
+        String getUsernameQuery = "SELECT username FROM [user] WHERE id = ?";
+        String getItemsQuery = "SELECT id, name FROM [items] WHERE sellerUserName = ?";
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement psGetUsername = conn.prepareStatement(getUsernameQuery)) {
+
+            psGetUsername.setString(1, userId);
+            String sellerUserName = null;
+            try (ResultSet rs = psGetUsername.executeQuery()) {
+                if (rs.next()) {
+                    sellerUserName = rs.getString("username");
+                } else {
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // User not found
+                }
+            }
+
+            try (PreparedStatement psGetItems = conn.prepareStatement(getItemsQuery)) {
+                psGetItems.setString(1, sellerUserName);
+                try (ResultSet rs = psGetItems.executeQuery()) {
+                    while (rs.next()) {
+                        ItemInfo item = new ItemInfo();
+                        item.setId(rs.getString("id"));
+                        item.setName(rs.getString("name"));
+                        items.add(item);
+                    }
+                }
+            }
+
+            return ResponseEntity.status(HttpStatus.OK).body(items);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 }

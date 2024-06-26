@@ -21,14 +21,8 @@ CREATE TABLE dbo.items (
                            imageLink VARCHAR(MAX)
 );
 
-CREATE TABLE dbo.items (
+CREATE TABLE dbo.auctionRoom (
                            id INT IDENTITY(1,1) PRIMARY KEY,
                            name VARCHAR(50),
-                           roomId VARCHAR(50),
-                           price DECIMAL(18, 2),
-                           bid_price DECIMAL(18, 2),
-                           description VARCHAR(MAX),
-                           openTime DATETIME
-                           endTime DATETIME
-                           imageLink VARCHAR(MAX)
+                           ownerId VARCHAR(50),
 );

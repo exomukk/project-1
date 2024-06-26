@@ -122,7 +122,7 @@ async function fetchBidItem() {
             productGrid.innerHTML = '';
             items.forEach(item => {
                 const biddingHTML = `
-                    <div class="showcase-container" data-item-id="${item.id}">
+                    <div class="showcase-container" data-item-id="${item.id}" xmlns="http://www.w3.org/1999/html">
                         <div class="showcase">
                             <div class="showcase-banner">
                                 <div class="mySlides fade">
@@ -171,7 +171,7 @@ async function fetchBidItem() {
                                 <div class="showcase-status">
                                     <div class="wrapper">
                                         <p>
-                                            minimum bid: <b>$${item.bid_price}</b>
+                                            highest bid now: <b>$${item.bid_price} by ${item.highestBidder}</b>
                                         </p>
                                     </div>
 
@@ -233,34 +233,44 @@ async function fetchBidItem() {
 
 
 // Bid more button
-async function bidMore(bidPrice) {
-    const userBid = prompt('Please enter your bid amount: ');
-    if (userBid > bidPrice) {
-        // alert('Bid placed successfully');
-        // const id = localStorage.getItem('itemId');
-        // window.location.href = `bidding.html?id=${id}`;
+async function bidMore(currentBidPrice) {
+    const userBid = parseFloat(prompt('Please enter your bid amount: '));
+    const userId = localStorage.getItem('userId');
+    const itemId = localStorage.getItem('itemId');
+
+    if (isNaN(userBid) || userBid <= (currentBidPrice + 1)) {
+        alert('Error: You must bid higher than the current price by at least 1$');
+        window.location.href = `bidding.html?id=${itemId}`;
+    } else {
         try {
-            const id = localStorage.getItem('itemId');
-            const response = await fetch(`/bid/${id}`, {
+            // Fetch the username of the current bidder
+            const userNameResponse = await fetch(`/getUserName?userId=${userId}`);
+            if (userNameResponse.status !== 200) {
+                throw new Error('Failed to get user name');
+            }
+            const highestBidder = await userNameResponse.text();
+
+            const response = await fetch(`/bid/${itemId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ bidPrice: userBid })
+                body: JSON.stringify({ bidPrice: userBid, highestBidder: highestBidder })
             });
+
             if (response.ok) {
                 alert('Bid placed successfully');
-                window.location.href = `bidding.html?id=${id}`;
+                window.location.href = `bidding.html?id=${itemId}`;
             } else {
-                alert('Error: You must bid higher than minimum price');
-                window.location.href = `bidding.html?id=${id}`;
+                const data = await response.json();
+                alert(data.message || 'Error: You must bid higher than the current price by at least 1$');
+                window.location.href = `bidding.html?id=${itemId}`;
             }
         } catch (error) {
             console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+            window.location.href = `bidding.html?id=${itemId}`;
         }
-    } else {
-        alert('Error: You must bid higher than minimum price');
-        window.location.href = `bidding.html?id=${id}`;
     }
 }
 

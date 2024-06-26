@@ -96,7 +96,11 @@ function createItem() {
 }
 
 function deleteRoom() {
-  // Under construction
+  window.location.href = `delete_room.html?id=${userId}`;
+}
+
+function deleteItem() {
+  window.location.href = `delete_item.html?id=${userId}`;
 }
 
 

@@ -1355,3 +1355,4 @@ footer {
 .createRoom .btn { background: green; }
 .deleteRoom .btn { background: red; }
 .createItem .btn { background: slateblue; }
+.deleteItem .btn { background: red; }
