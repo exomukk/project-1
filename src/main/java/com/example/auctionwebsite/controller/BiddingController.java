@@ -136,4 +136,27 @@ public class BiddingController {
             throw new RuntimeException(e);
         }
     }
+
+    // Get item info
+    @GetMapping("/items/{itemId}")
+    public ResponseEntity<List<ItemInfo>> getItemInfo(@PathVariable String itemId) {
+        List<ItemInfo> names = new ArrayList<>();
+        String query = "SELECT name, bid_price, highestBidder FROM items WHERE id = ?";
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setString(1, itemId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    ItemInfo item = new ItemInfo();
+                    item.setName(rs.getString("name"));
+                    item.setBid_price(rs.getString("bid_price"));
+                    item.setHighestBidder(rs.getString("highestBidder"));
+                    names.add(item);
+                }
+            }
+            return ResponseEntity.status(HttpStatus.OK).body(names);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

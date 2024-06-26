@@ -60,6 +60,7 @@ export function startOpenCountdown(openTime, element) {
 export function startBigCountdown(endTime, countdownContainer) {
     const end = new Date(endTime);
 
+    let notificationsShown = 0; // Đếm số lần thông báo đã hiển thị
     const intervalId = setInterval(() => {
         const now = new Date();
         const distance = end - now;
@@ -84,6 +85,9 @@ export function startBigCountdown(endTime, countdownContainer) {
         }
     }, 1000);
 }
+
+
+
 
 
 // Hàm di chuyển item lên phần đầu web
@@ -181,16 +185,20 @@ async function moveItem(itemId) {
     }
 }
 
-// Delete item function - under construction
+
+
+
+// Delete item function
 async function deleteItem(itemId) {
     console.log('Deleting item with API:', `/items/${itemId}/del`);
     try {
         const deleteResponse = await fetch(`/items/${itemId}/del`, {
             method: 'DELETE'
         });
-        console.log(deleteResponse);
         if (deleteResponse.ok) {
-            console.log('delete ok');
+            console.log('Item deleted successfully');
+        } else {
+            console.error('Error deleting item:', deleteResponse.status);
         }
     } catch (error) {
         console.error('Error:', error);

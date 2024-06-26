@@ -23,7 +23,7 @@ public class ItemController {
     @GetMapping("/items")
     public ResponseEntity<List<ItemInfo>> getItems() {
         List<ItemInfo> items = new ArrayList<>();
-        String query = "SELECT id, name, price, description, openTime, endTime, imageLink FROM items";
+        String query = "SELECT id, name, price, description, openTime, endTime, imageLink, bid_price, highestBidder FROM items";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(query);
              ResultSet rs = ps.executeQuery()) {
@@ -37,6 +37,8 @@ public class ItemController {
                 item.setOpenTime(rs.getString("openTime"));
                 item.setEndTime(rs.getString("endTime"));
                 item.setImageLink(rs.getString("imageLink"));
+                item.setBid_price(rs.getString("bid_price"));
+                item.setHighestBidder(rs.getString("highestBidder"));
                 items.add(item);
             }
             return ResponseEntity.status(HttpStatus.OK).body(items);
@@ -128,7 +130,7 @@ public class ItemController {
     public ResponseEntity<List<ItemInfo>> getItemsForDeletion(@PathVariable String userId) {
         List<ItemInfo> items = new ArrayList<>();
         String getUsernameQuery = "SELECT username FROM [user] WHERE id = ?";
-        String getItemsQuery = "SELECT id, name FROM [items] WHERE sellerUserName = ?";
+        String getItemsQuery = "SELECT id, name FROM [items] WHERE sellerUserName = ? AND (highestBidder IS NULL OR highestBidder = '')";
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement psGetUsername = conn.prepareStatement(getUsernameQuery)) {

@@ -1,6 +1,8 @@
 'use strict';
 
 // countdown function
+// import {countdownFunctions, startOpenCountdown} from "./countdownFunctions";
+
 function startBigCountdown(endTime, countdownContainer) {
     const end = new Date(endTime);
 
@@ -20,11 +22,14 @@ function startBigCountdown(endTime, countdownContainer) {
         countdownContainer.querySelector('.countdown-content:nth-child(3) .display-number').textContent = minutes;
         countdownContainer.querySelector('.countdown-content:nth-child(4) .display-number').textContent = seconds;
 
+        if (distance < 1) {
+            console.log("auction ending");
+            auctionFinal();
+        }
+
         if (distance < 0) {
             clearInterval(intervalId);
             countdownContainer.innerHTML = '<p class="expired">EXPIRED</p>';
-            // Gọi hàm để xóa item ở đây
-            deleteItem(localStorage.getItem('itemId'));
         }
     }, 1000);
 }
@@ -59,11 +64,8 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('register-link').style.display = 'none';
         document.getElementById('logout-link').style.display = 'block';
         document.getElementById('profile-link').style.display = 'block';
-        document.getElementById('room-link').style.display = 'block';
     }
 });
-
-document.addEventListener('DOMContentLoaded', fetchBidItem);
 
 function toggleDropdown() {
     const dropdown = document.getElementById('dropdown-content-header');
@@ -80,7 +82,7 @@ function editProfile() {
     window.location.href = `profile.html?id=${userId}`;
 }
 
-
+document.addEventListener('DOMContentLoaded', fetchBidItem);
 
 
 // slide show for showing item image / under construction
@@ -112,7 +114,6 @@ function showSlides(n) {
 async function fetchBidItem() {
     const id = localStorage.getItem('itemId');
     const userId = localStorage.getItem('userId');
-    alert("cooking");
 
     try {
         const response = await fetch(`/bid/${id}`);
@@ -218,6 +219,14 @@ async function fetchBidItem() {
 
                 const countdownContainer = productGrid.lastElementChild.querySelector('.countdown');
                 startBigCountdown(item.endTime, countdownContainer);
+
+                function showNotificationToast(highestBidder, itemName, bid_price) {
+                    const toast = document.querySelector('.notification-toast');
+                    toast.querySelector('.toast-title').textContent = `${itemName} - $${bid_price}`;
+                    toast.querySelector('.toast-message').textContent = `${highestBidder} is currently the highest bidder`;
+                }
+
+                showNotificationToast(item.highestBidder, item.name, item.bid_price);
             });
         } else {
             console.error('Error fetching items:', response.status);
@@ -271,6 +280,31 @@ async function bidMore(currentBidPrice) {
             alert('An error occurred. Please try again.');
             window.location.href = `bidding.html?id=${itemId}`;
         }
+    }
+}
+
+
+
+
+// function auctionFinal
+async function auctionFinal() {
+    const itemId = localStorage.getItem('itemId');
+    try {
+        const response = await fetch(`/items/${itemId}`);
+        if (response.ok) {
+            const items = await response.json();
+            const highestBidder = items[0].highestBidder;
+            const bid_price = items[0].bid_price;
+            const name = items[0].name;
+            alert(`Auction has ended! The highest bidder for ${name} is ${highestBidder} with $${bid_price}.`);
+
+            // Gọi hàm để xóa item ở đây
+            deleteItem(itemId);
+        } else {
+            console.error('Error fetching items:', response.status);
+        }
+    } catch (error) {
+        console.error('Error:', error);
     }
 }
 

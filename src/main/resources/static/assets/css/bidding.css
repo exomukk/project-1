@@ -381,7 +381,7 @@ body::-webkit-scrollbar-thumb:hover {
     box-shadow: 0 5px 20px hsla(0, 0%, 0%, 0.15);
     transform: translateX(calc(-100% - 40px));
     transition: 0.5s ease-in-out;
-    z-index: 5;
+    z-index: 100000000;
     animation: slideInOut 10s ease-in-out infinite;
 }
 
@@ -2207,7 +2207,7 @@ footer {
     transition: 0.6s ease;
     border-radius: 3px;
     user-select: none;
-    z-index: 10000;
+    z-index: 5;
 }
 
 /* Định nghĩa vị trí cho nút "next" */
