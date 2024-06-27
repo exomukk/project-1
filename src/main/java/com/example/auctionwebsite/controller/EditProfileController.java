@@ -26,8 +26,6 @@ public class EditProfileController {
 
     @PostMapping("/editprofile.app")
     public ResponseEntity<Map<String, String>> editProfile(@RequestBody EditProfileInfo editProfileInfo) {
-        System.out.println("Connected successfully");
-
         if (editProfileInfo.getId() == null || editProfileInfo.getId().isEmpty()) {
             Map<String, String> response = new HashMap<>();
             response.put("message", "User ID is required");
@@ -80,11 +78,9 @@ public class EditProfileController {
             Map<String, String> response = new HashMap<>();
             if (rowsUpdated > 0) {
                 response.put("message", "Changed success");
-                System.out.println("Changed");
                 return ResponseEntity.status(HttpStatus.OK).body(response);
             } else {
                 response.put("message", "Changed failed");
-                System.out.println("Failed");
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
             }
         } catch (SQLException e) {

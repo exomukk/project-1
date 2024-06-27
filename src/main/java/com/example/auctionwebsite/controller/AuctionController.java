@@ -51,14 +51,12 @@ public class AuctionController {
                         if (generatedKeys.next()) {
                             // Thiết lập ID cho auctionRoom từ khóa được tạo tự động
                             auctionRoom.setId(String.valueOf(generatedKeys.getLong(1)));
-                            System.out.println("Room created successfully, id: " + auctionRoom.getId());
                             // Trả về đối tượng AuctionRoom với ID đã được thiết lập
                             response.put("message", auctionRoom.getId());
                             return ResponseEntity.ok(response);
                         }
                     }
                 } else {
-                    System.out.println("Room creation failed");
                     response.put("message", "Room creation failed");
                     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
                 }

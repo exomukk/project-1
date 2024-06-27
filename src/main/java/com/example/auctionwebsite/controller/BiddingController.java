@@ -21,7 +21,6 @@ public class BiddingController {
 
     @GetMapping("/bid/{id}")
     public ResponseEntity<List<ItemInfo>> getBidItems(@PathVariable String id) {
-        System.out.println("eagle callin birdy");
         List<ItemInfo> items = new ArrayList<>();
         String query = "SELECT name, roomId, price, bid_price, description, openTime, endTime, imageLink, highestBidder FROM items WHERE id = ?";
         try (Connection conn = dataSource.getConnection();
@@ -91,7 +90,6 @@ public class BiddingController {
     // Endpoint to delete an item
     @DeleteMapping("/items/{itemId}/del")
     public ResponseEntity<Map<String, String>> deleteItem(@PathVariable String itemId) {
-        System.out.println("calling deleteItem");
         Map<String, String> response = new HashMap<>();
         String query = "DELETE FROM items WHERE id = ?";
         try (Connection conn = dataSource.getConnection();
@@ -114,7 +112,6 @@ public class BiddingController {
     // Endpoint to get user information
     @GetMapping("/users/{userId}/del")
     public ResponseEntity<List<UserInfo>> getUserInfo(@PathVariable String userId) {
-        System.out.println("calling getUserInfo");
         List<UserInfo> names = new ArrayList<>();
         String query = "SELECT username FROM [user] WHERE id = ?";
         try (Connection conn = dataSource.getConnection();
@@ -128,9 +125,7 @@ public class BiddingController {
                     System.out.println(rs.getString("username"));
                     names.add(item);
                 }
-                System.out.println(names);
             }
-            System.out.println(ResponseEntity.status(HttpStatus.OK).body(names));
             return ResponseEntity.status(HttpStatus.OK).body(names);
         } catch (SQLException e) {
             throw new RuntimeException(e);

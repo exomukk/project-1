@@ -33,7 +33,6 @@ public class ProfileController {
 
     @GetMapping("/profile")
     public ResponseEntity<?> getProfile(@RequestParam String userId) {
-        System.out.println(userId);
         // Sử dụng userId để truy vấn cơ sở dữ liệu và lấy thông tin username
         String query = "SELECT username FROM [user] WHERE id = ?";
         try (Connection conn = dataSource.getConnection();
