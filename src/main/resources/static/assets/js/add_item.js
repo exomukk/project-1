@@ -1,1 +1,117 @@
-'use strict';const _0x232c63=_0xe185;(function(_0x32cb60,_0x462d04){const _0x2397b7=_0xe185,_0x457f33=_0x32cb60();while(!![]){try{const _0x328e63=-parseInt(_0x2397b7(0xe0))/0x1*(-parseInt(_0x2397b7(0xdf))/0x2)+parseInt(_0x2397b7(0xe8))/0x3+-parseInt(_0x2397b7(0xd8))/0x4*(parseInt(_0x2397b7(0xf2))/0x5)+-parseInt(_0x2397b7(0xee))/0x6*(parseInt(_0x2397b7(0xd2))/0x7)+-parseInt(_0x2397b7(0xd6))/0x8*(parseInt(_0x2397b7(0xf3))/0x9)+-parseInt(_0x2397b7(0xd9))/0xa*(parseInt(_0x2397b7(0xd1))/0xb)+parseInt(_0x2397b7(0xe1))/0xc*(parseInt(_0x2397b7(0xd4))/0xd);if(_0x328e63===_0x462d04)break;else _0x457f33['push'](_0x457f33['shift']());}catch(_0x324c64){_0x457f33['push'](_0x457f33['shift']());}}}(_0x3750,0xb86b4));async function fetchRooms(){const _0x2e8a60=_0xe185;console[_0x2e8a60(0xf1)](_0x2e8a60(0xf0));const _0x1d5d83=localStorage[_0x2e8a60(0xe7)](_0x2e8a60(0xfa));console[_0x2e8a60(0xf1)](_0x1d5d83);try{const _0x1f2ede=await fetch(_0x2e8a60(0xfd)+_0x1d5d83+_0x2e8a60(0xe4));if(_0x1f2ede['ok']){const _0x4127e6=await _0x1f2ede[_0x2e8a60(0xf8)](),_0x48af9c=document['getElementById'](_0x2e8a60(0xe5));_0x48af9c[_0x2e8a60(0xdc)]=_0x2e8a60(0xde),_0x4127e6[_0x2e8a60(0xff)](_0x3741e2=>{const _0x51c90f=_0x2e8a60,_0x3e7a61=_0x51c90f(0xfc)+_0x3741e2['id']+'\x22>'+_0x3741e2[_0x51c90f(0xec)]+_0x51c90f(0xda);_0x48af9c[_0x51c90f(0xe9)]('beforeend',_0x3e7a61);});}else console[_0x2e8a60(0xd3)]('Error\x20fetching\x20rooms:',_0x1f2ede[_0x2e8a60(0xd0)]);}catch(_0x661969){console[_0x2e8a60(0xd3)](_0x2e8a60(0xd7),_0x661969);}}function _0x3750(){const _0x4a0bd6=['text','<option\x20value=\x22\x22>Select\x20Room*</option>','18326CljrlI','163HRAJDW','12ztJnuh','/getUserName?userId=','location','/addItems','roomSelect','itemBidPrice','getItem','3988260DYEbpF','insertAdjacentHTML','Create\x20item\x20success','An\x20unknown\x20error\x20occurred.','name','itemName','25986xbYTbz','POST','trying\x20to\x20get\x20room\x20data','log','393215pycPvw','18PArwTV','itemImageLink','application/json','value','Failed\x20to\x20get\x20user\x20name','json','index.html?id=','userId','/createItem','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<option\x20value=\x22','/user/','message','forEach','DOMContentLoaded','An\x20error\x20occurred.\x20Please\x20try\x20again.','status','332002AcjSXa','1057qNSkBi','error','4881916TjySNz','Error\x20during\x20create\x20request:','4519336IFxdyI','Error\x20during\x20fetch\x20request:','32Yaoamz','10PCKUzI','</option>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','getElementById','innerHTML'];_0x3750=function(){return _0x4a0bd6;};return _0x3750();}document['addEventListener'](_0x232c63(0x100),fetchRooms);function _0xe185(_0x2f19af,_0x118c5b){const _0x375043=_0x3750();return _0xe185=function(_0xe1853f,_0x2bfc41){_0xe1853f=_0xe1853f-0xcf;let _0x143b9d=_0x375043[_0xe1853f];return _0x143b9d;},_0xe185(_0x2f19af,_0x118c5b);}async function createItem(){const _0x2c6d72=_0x232c63,_0x222fda=document[_0x2c6d72(0xdb)]('roomSelect')['value'],_0x5c1262=document['getElementById'](_0x2c6d72(0xed))[_0x2c6d72(0xf6)],_0x4d5eeb=document[_0x2c6d72(0xdb)]('itemPrice')[_0x2c6d72(0xf6)],_0x2616f1=document[_0x2c6d72(0xdb)](_0x2c6d72(0xe6))[_0x2c6d72(0xf6)],_0xa9a1df=document[_0x2c6d72(0xdb)]('itemDescription')['value'],_0xe5acd2=document[_0x2c6d72(0xdb)](_0x2c6d72(0xf4))[_0x2c6d72(0xf6)],_0x6ffb19=localStorage['getItem'](_0x2c6d72(0xfa));try{const _0x2bac7f=await fetch(_0x2c6d72(0xe2)+_0x6ffb19);if(_0x2bac7f[_0x2c6d72(0xd0)]===0xc8){const _0x319431=await _0x2bac7f[_0x2c6d72(0xdd)](),_0x308c62={'roomId':_0x222fda,'name':_0x5c1262,'price':_0x4d5eeb,'bid_price':_0x2616f1,'description':_0xa9a1df,'imageLink':_0xe5acd2,'sellerUserName':_0x319431,'highestBidder':null};console['log'](_0x308c62);const _0x46e8b1=await fetch(_0x2c6d72(0xfb),{'method':_0x2c6d72(0xef),'headers':{'Content-Type':_0x2c6d72(0xf5)},'body':JSON['stringify'](_0x308c62)});if(_0x46e8b1[_0x2c6d72(0xd0)]===0xc9)alert(_0x2c6d72(0xea)),window[_0x2c6d72(0xe3)]['href']=_0x2c6d72(0xf9)+_0x6ffb19;else{const _0x3d3ebe=await _0x46e8b1[_0x2c6d72(0xf8)]();console['log'](_0x3d3ebe),console[_0x2c6d72(0xf1)](_0x46e8b1),alert(_0x3d3ebe[_0x2c6d72(0xfe)]||_0x2c6d72(0xeb));}}else throw new Error(_0x2c6d72(0xf7));}catch(_0x5db3d3){console[_0x2c6d72(0xd3)](_0x2c6d72(0xd5),_0x5db3d3),alert(_0x2c6d72(0xcf));}}
+'use strict';
+
+// Fetch room for the dropdown to choose rooms
+async function fetchRooms() {
+    console.log("trying to get room data");
+    const userId = localStorage.getItem('userId');
+    console.log(userId);
+
+    try {
+        const response = await fetch(`/user/${userId}/addItems`);
+        if (response.ok) {
+            const rooms = await response.json();
+            const roomSelect = document.getElementById('roomSelect');
+            roomSelect.innerHTML = '<option value="">Select Room*</option>'; // reset dropdown
+            rooms.forEach(room => {
+                const optionHTML = `
+                    <option value="${room.id}">${room.name}</option>
+                `;
+                roomSelect.insertAdjacentHTML('beforeend', optionHTML);
+            });
+        } else {
+            console.error('Error fetching rooms:', response.status);
+        }
+    } catch (error) {
+        console.error('Error during fetch request:', error);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', fetchRooms);
+
+
+
+
+
+
+// create item functions
+async function createItem() {
+    const roomSelect = document.getElementById('roomSelect').value;
+    const itemName = document.getElementById('itemName').value;
+    const itemPrice = document.getElementById('itemPrice').value;
+    const itemBidPrice = document.getElementById('itemBidPrice').value;
+    const itemDescription = document.getElementById('itemDescription').value;
+    const itemImageLink = document.getElementById('itemImageLink').value;
+    const userId = localStorage.getItem('userId');
+
+    const namePattern = /^[A-Za-z0-9\s]{1,100}$/;
+    const pricePattern = /^\d+(\.\d{1,2})?$/;
+    const descriptionPattern = /^.{1,500}$/;
+    const urlPattern = /^https?:\/\/.+/;
+
+    if (!namePattern.test(itemName)) {
+        alert('Item Name should be 1-100 characters long and can contain letters, numbers, and spaces.');
+        return;
+    }
+
+    if (!pricePattern.test(itemPrice)) {
+        alert('Price should be a positive number with up to 2 decimal places.');
+        return;
+    }
+
+    if (!pricePattern.test(itemBidPrice)) {
+        alert('Minimum Price should be a positive number with up to 2 decimal places.');
+        return;
+    }
+
+    if (!descriptionPattern.test(itemDescription)) {
+        alert('Description should be 1-500 characters long.');
+        return;
+    }
+
+    if (!urlPattern.test(itemImageLink)) {
+        alert('Image Link should be a valid URL.');
+        return;
+    }
+
+
+    try {
+        const userNameResponse = await fetch(`/getUserName?userId=${userId}`);
+        if (userNameResponse.status === 200) {
+            const sellerUserName = await userNameResponse.text();
+            const createInfo = {
+                roomId: roomSelect,
+                name: itemName,
+                price: itemPrice,
+                bid_price: itemBidPrice,
+                description: itemDescription,
+                imageLink: itemImageLink,
+                sellerUserName: sellerUserName,
+                highestBidder: null // Assuming it's null when the item is created
+            };
+            console.log(createInfo);
+            const response = await fetch('/createItem', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(createInfo)
+            });
+            if (response.status === 201) {
+                // Handle successful item creation
+                alert("Create item success");
+                window.location.href = `index.html?id=${userId}`;
+            } else {
+                const data = await response.json();
+                console.log(data);
+                console.log(response);
+                // Handle other error cases
+                alert(data.message || 'An unknown error occurred.');
+            }
+        } else {
+            throw new Error('Failed to get user name');
+        }
+    } catch (error) {
+        console.error('Error during create request:', error);
+        alert('An error occurred. Please try again.');
+    }
+}

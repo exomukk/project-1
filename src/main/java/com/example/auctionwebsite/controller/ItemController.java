@@ -1,7 +1,6 @@
 package com.example.auctionwebsite.controller;
 
 import com.example.auctionwebsite.model.ItemInfo;
-import com.example.auctionwebsite.model.RoomInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -69,6 +68,39 @@ public class ItemController {
     @PostMapping("/createItem")
     public ResponseEntity<Map<String, String>> createItem(@RequestBody ItemInfo itemInfo) {
         Map<String, String> response = new HashMap<>();
+
+        // Regex patterns
+        String namePattern = "^[A-Za-z0-9\\s]{1,100}$";
+        String pricePattern = "^\\d+(\\.\\d{1,2})?$";
+        String descriptionPattern = "^.{1,500}$";
+        String urlPattern = "^https?:\\/\\/.+";
+
+        // Validate item fields using regex
+        if (!itemInfo.getName().matches(namePattern)) {
+            response.put("message", "Item Name should be 1-100 characters long and can contain letters, numbers, and spaces.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+
+        if (!itemInfo.getPrice().matches(pricePattern)) {
+            response.put("message", "Price should be a positive number with up to 2 decimal places.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+
+        if (!itemInfo.getBid_price().matches(pricePattern)) {
+            response.put("message", "Minimum Price should be a positive number with up to 2 decimal places.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+
+        if (!itemInfo.getDescription().matches(descriptionPattern)) {
+            response.put("message", "Description should be 1-500 characters long.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+
+        if (!itemInfo.getImageLink().matches(urlPattern)) {
+            response.put("message", "Image Link should be a valid URL.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+
         String insertQuery = "INSERT INTO master.dbo.[items] (name, price, bid_price, description, openTime, endTime, imageLink, roomId, sellerUserName, highestBidder) VALUES (?, ?, ?, ?, DATEADD(DAY, 1, GETDATE()), DATEADD(DAY, 1, DATEADD(DAY, 1, GETDATE())), ?, ?, ?, ?)";
 
         try (Connection conn = dataSource.getConnection();

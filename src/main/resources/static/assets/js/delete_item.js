@@ -1,1 +1,63 @@
-'use strict';function _0x9a0f(){const _0x535a55=['message','Error\x20fetching\x20items:','16810640uMEqUW','value','4657786syKoDw','Please\x20select\x20an\x20item\x20to\x20delete','option[value=\x22','status','userId','Error\x20during\x20fetch\x20request:','remove','error','beforeend','addEventListener','6610235cmyNlr','10742904YZSEAd','5202lRSKbU','name','296532YNJiVZ','json','querySelector','insertAdjacentHTML','DOMContentLoaded','1403602Qbjtbt','getElementById','2ikfbxP','Failed\x20to\x20delete\x20item','innerHTML','itemSelect'];_0x9a0f=function(){return _0x535a55;};return _0x9a0f();}const _0x5815d4=_0x3647;function _0x3647(_0x2f5a35,_0x2d2818){const _0x9a0fe5=_0x9a0f();return _0x3647=function(_0x3647ed,_0x4bf440){_0x3647ed=_0x3647ed-0xfb;let _0x431b14=_0x9a0fe5[_0x3647ed];return _0x431b14;},_0x3647(_0x2f5a35,_0x2d2818);}(function(_0x2cbe0d,_0x2e336a){const _0x46d935=_0x3647,_0x1606a0=_0x2cbe0d();while(!![]){try{const _0x1a4734=parseInt(_0x46d935(0xfd))/0x1*(parseInt(_0x46d935(0xfb))/0x2)+-parseInt(_0x46d935(0x111))/0x3+-parseInt(_0x46d935(0x113))/0x4+-parseInt(_0x46d935(0x10f))/0x5+-parseInt(_0x46d935(0x110))/0x6+parseInt(_0x46d935(0x105))/0x7+parseInt(_0x46d935(0x103))/0x8;if(_0x1a4734===_0x2e336a)break;else _0x1606a0['push'](_0x1606a0['shift']());}catch(_0x5402d7){_0x1606a0['push'](_0x1606a0['shift']());}}}(_0x9a0f,0xefbac));async function fetchItems(){const _0x14b4a8=_0x3647,_0x3ecdd9=localStorage['getItem'](_0x14b4a8(0x109));try{const _0x3ceea0=await fetch('/delItem/'+_0x3ecdd9);if(_0x3ceea0['ok']){const _0x39f36d=await _0x3ceea0[_0x14b4a8(0x114)](),_0x363a32=document['getElementById'](_0x14b4a8(0x100));_0x363a32[_0x14b4a8(0xff)]='<option\x20value=\x22\x22>Select\x20Item*</option>',_0x39f36d['forEach'](_0x356587=>{const _0x580006=_0x14b4a8,_0x3df27c='\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<option\x20value=\x22'+_0x356587['id']+'\x22>'+_0x356587[_0x580006(0x112)]+'</option>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20';_0x363a32[_0x580006(0x116)](_0x580006(0x10d),_0x3df27c);});}else console[_0x14b4a8(0x10c)](_0x14b4a8(0x102),_0x3ceea0[_0x14b4a8(0x108)]);}catch(_0x133c69){console[_0x14b4a8(0x10c)](_0x14b4a8(0x10a),_0x133c69);}}document[_0x5815d4(0x10e)](_0x5815d4(0x117),fetchItems);async function deleteItem(){const _0x5e74ee=_0x5815d4,_0x3cfe81=document[_0x5e74ee(0xfc)](_0x5e74ee(0x100)),_0x5e2081=_0x3cfe81[_0x5e74ee(0x104)];if(!_0x5e2081){alert(_0x5e74ee(0x106));return;}try{const _0x1d3a63=await fetch('/delItem/'+_0x5e2081,{'method':'DELETE'});if(_0x1d3a63['ok']){alert('Item\x20deleted\x20successfully');const _0x4cd879=_0x3cfe81[_0x5e74ee(0x115)](_0x5e74ee(0x107)+_0x5e2081+'\x22]');_0x4cd879[_0x5e74ee(0x10b)]();}else{const _0x5dc127=await _0x1d3a63[_0x5e74ee(0x114)]();alert(_0x5dc127[_0x5e74ee(0x101)]||_0x5e74ee(0xfe)),console[_0x5e74ee(0x10c)]('Error\x20deleting\x20item:',_0x1d3a63[_0x5e74ee(0x108)]);}}catch(_0x1bb893){console[_0x5e74ee(0x10c)]('Error\x20during\x20delete\x20request:',_0x1bb893);}}
+'use strict';
+
+// Fetch items for the dropdown to choose items
+async function fetchItems() {
+    const userId = localStorage.getItem('userId');
+
+    try {
+        const response = await fetch(`/delItem/${userId}`);
+        if (response.ok) {
+            const items = await response.json();
+            const itemSelect = document.getElementById('itemSelect');
+            itemSelect.innerHTML = '<option value="">Select Item*</option>';
+            items.forEach(item => {
+                const optionHTML = `
+                    <option value="${item.id}">${item.name}</option>
+                `;
+                itemSelect.insertAdjacentHTML('beforeend', optionHTML);
+            });
+        } else {
+            console.error('Error fetching items:', response.status);
+        }
+    } catch (error) {
+        console.error('Error during fetch request:', error);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', fetchItems);
+
+
+
+
+
+
+
+// Function to delete an item
+async function deleteItem() {
+    const itemSelect = document.getElementById('itemSelect');
+    const itemId = itemSelect.value;
+
+    if (!itemId) {
+        alert('Please select an item to delete');
+        return;
+    }
+
+    try {
+        const response = await fetch(`/delItem/${itemId}`, {
+            method: 'DELETE'
+        });
+
+        if (response.ok) {
+            alert('Item deleted successfully');
+            // Remove the deleted item from the dropdown
+            const optionToRemove = itemSelect.querySelector(`option[value="${itemId}"]`);
+            optionToRemove.remove();
+        } else {
+            const data = await response.json();
+            alert(data.message || 'Failed to delete item');
+            console.error('Error deleting item:', response.status);
+        }
+    } catch (error) {
+        console.error('Error during delete request:', error);
+    }
+}

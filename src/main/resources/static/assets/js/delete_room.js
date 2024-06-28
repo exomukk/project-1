@@ -1,1 +1,62 @@
-'use strict';const _0x3a7c76=_0x8ddf;(function(_0x1260f2,_0x4a581b){const _0x12b45f=_0x8ddf,_0x39b601=_0x1260f2();while(!![]){try{const _0x4d62ea=-parseInt(_0x12b45f(0x10d))/0x1+-parseInt(_0x12b45f(0x10f))/0x2*(-parseInt(_0x12b45f(0x113))/0x3)+parseInt(_0x12b45f(0x11b))/0x4+parseInt(_0x12b45f(0x110))/0x5+parseInt(_0x12b45f(0x109))/0x6+parseInt(_0x12b45f(0x107))/0x7+parseInt(_0x12b45f(0x121))/0x8*(-parseInt(_0x12b45f(0x117))/0x9);if(_0x4d62ea===_0x4a581b)break;else _0x39b601['push'](_0x39b601['shift']());}catch(_0x1d53b9){_0x39b601['push'](_0x39b601['shift']());}}}(_0x209d,0xc596d));function _0x209d(){const _0x3785cb=['6072353BKXvqU','log','1644024iTZntD','innerHTML','/addItems','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<option\x20value=\x22','899024MLXpjp','name','4702eMqqST','6533470AWeofH','/user/','forEach','201egFAvx','error','Failed\x20to\x20delete\x20room','getItem','27KXZWAu','Room\x20and\x20its\x20items\x20deleted\x20successfully','value','<option\x20value=\x22\x22>Select\x20Room*</option>','3031656EdLGkc','/rooms/','trying\x20to\x20get\x20room\x20data','Error\x20fetching\x20rooms:','option[value=\x22','status','4414024eALooX','getElementById','userId','</option>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','Error\x20during\x20fetch\x20request:','DELETE','roomSelect','Error\x20during\x20delete\x20request:','json','addEventListener'];_0x209d=function(){return _0x3785cb;};return _0x209d();}async function fetchRooms(){const _0x5dbbec=_0x8ddf;console['log'](_0x5dbbec(0x11d));const _0x2af03c=localStorage[_0x5dbbec(0x116)](_0x5dbbec(0x123));console[_0x5dbbec(0x108)](_0x2af03c);try{const _0x6993ff=await fetch(_0x5dbbec(0x111)+_0x2af03c+_0x5dbbec(0x10b));if(_0x6993ff['ok']){const _0x4dbd06=await _0x6993ff[_0x5dbbec(0x105)](),_0x5f3670=document[_0x5dbbec(0x122)]('roomSelect');_0x5f3670[_0x5dbbec(0x10a)]=_0x5dbbec(0x11a),_0x4dbd06[_0x5dbbec(0x112)](_0x1b44f7=>{const _0x1a2ef7=_0x5dbbec,_0x5a936f=_0x1a2ef7(0x10c)+_0x1b44f7['id']+'\x22>'+_0x1b44f7[_0x1a2ef7(0x10e)]+_0x1a2ef7(0x124);_0x5f3670['insertAdjacentHTML']('beforeend',_0x5a936f);});}else console['error'](_0x5dbbec(0x11e),_0x6993ff[_0x5dbbec(0x120)]);}catch(_0x3db220){console[_0x5dbbec(0x114)](_0x5dbbec(0x125),_0x3db220);}}document[_0x3a7c76(0x106)]('DOMContentLoaded',fetchRooms);function _0x8ddf(_0x107b3c,_0x882f24){const _0x209d25=_0x209d();return _0x8ddf=function(_0x8ddfc1,_0x239ff1){_0x8ddfc1=_0x8ddfc1-0x104;let _0xbb3ee0=_0x209d25[_0x8ddfc1];return _0xbb3ee0;},_0x8ddf(_0x107b3c,_0x882f24);}async function deleteRoom(){const _0x4211e1=_0x3a7c76,_0x4cdea2=document[_0x4211e1(0x122)](_0x4211e1(0x127)),_0x1642e1=_0x4cdea2[_0x4211e1(0x119)];if(!_0x1642e1){alert('Please\x20select\x20a\x20room\x20to\x20delete');return;}try{const _0x2eb621=await fetch(_0x4211e1(0x11c)+_0x1642e1,{'method':_0x4211e1(0x126)});if(_0x2eb621['ok']){alert(_0x4211e1(0x118));const _0x1ff839=_0x4cdea2['querySelector'](_0x4211e1(0x11f)+_0x1642e1+'\x22]');_0x1ff839['remove']();}else alert(_0x4211e1(0x115)),console['error']('Error\x20deleting\x20room:',_0x2eb621[_0x4211e1(0x120)]);}catch(_0x32b438){console[_0x4211e1(0x114)](_0x4211e1(0x104),_0x32b438);}}
+'use strict';
+
+// Fetch room for the dropdown to choose rooms
+async function fetchRooms() {
+    console.log("trying to get room data");
+    const userId = localStorage.getItem('userId');
+    console.log(userId);
+
+    try {
+        const response = await fetch(`/user/${userId}/addItems`);
+        if (response.ok) {
+            const rooms = await response.json();
+            const roomSelect = document.getElementById('roomSelect');
+            roomSelect.innerHTML = '<option value="">Select Room*</option>'; // reset dropdown
+            rooms.forEach(room => {
+                const optionHTML = `
+                    <option value="${room.id}">${room.name}</option>
+                `;
+                roomSelect.insertAdjacentHTML('beforeend', optionHTML);
+            });
+        } else {
+            console.error('Error fetching rooms:', response.status);
+        }
+    } catch (error) {
+        console.error('Error during fetch request:', error);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', fetchRooms);
+
+
+
+
+
+// function xóa phòng
+async function deleteRoom() {
+    const roomSelect = document.getElementById('roomSelect');
+    const roomId = roomSelect.value;
+
+    if (!roomId) {
+        alert('Please select a room to delete');
+        return;
+    }
+
+    try {
+        const response = await fetch(`/rooms/${roomId}`, {
+            method: 'DELETE'
+        });
+
+        if (response.ok) {
+            alert('Room and its items deleted successfully');
+            // Remove the deleted room from the dropdown
+            const optionToRemove = roomSelect.querySelector(`option[value="${roomId}"]`);
+            optionToRemove.remove();
+        } else {
+            alert('Failed to delete room');
+            console.error('Error deleting room:', response.status);
+        }
+    } catch (error) {
+        console.error('Error during delete request:', error);
+    }
+}

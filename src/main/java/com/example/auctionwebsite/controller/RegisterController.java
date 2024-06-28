@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-
 public class RegisterController {
     @Autowired
     private DataSource dataSource;
@@ -28,12 +27,39 @@ public class RegisterController {
         String checkUserQuery = "SELECT COUNT(*) FROM master.dbo.[user] WHERE username = ? OR phone = ?";
         String registerQuery = "INSERT INTO master.dbo.[user] (username, password, phone, address) VALUES (?, ?, ?, ?)";
 
+        // Define regex patterns
+        String usernamePattern = "^[a-zA-Z0-9_]{3,16}$";
+        String passwordPattern = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$";
+        String phonePattern = "^\\+?[0-9]{10,15}$";
+        String addressPattern = "^.{5,100}$";
+
+        Map<String, String> response = new HashMap<>();
+
+        // Validate fields using regex
+        if (!loginInfo.getUsername().matches(usernamePattern)) {
+            response.put("message", "Invalid username.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+
+        if (!loginInfo.getPassword().matches(passwordPattern)) {
+            response.put("message", "Invalid password.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+
+        if (!loginInfo.getPhone().matches(phonePattern)) {
+            response.put("message", "Invalid phone number.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+
+        if (!loginInfo.getAddress().matches(addressPattern)) {
+            response.put("message", "Invalid address.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+
         // Hash the password using SHA-256
         String hashedPassword = encodePassword(loginInfo.getPassword());
 
-        Map<String, String> response;
         try (Connection conn = dataSource.getConnection()) {
-            response = new HashMap<>();
             // Check for duplicate username or phone
             try (PreparedStatement checkStmt = conn.prepareStatement(checkUserQuery)) {
                 checkStmt.setString(1, loginInfo.getUsername());
@@ -60,7 +86,7 @@ public class RegisterController {
                     try (ResultSet generatedKeys = registerStmt.getGeneratedKeys()) {
                         if (generatedKeys.next()) {
                             long userId = generatedKeys.getLong(1);
-                            response.put("message", "Register successfully !");
+                            response.put("message", "Register successfully!");
                             response.put("userId", String.valueOf(userId));
                             return ResponseEntity.ok(response);
                         }

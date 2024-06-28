@@ -29,6 +29,22 @@ public class LoginController {
     public ResponseEntity<Map<String, String>> login(@RequestBody LoginInfo loginInfo) {
         System.out.println("Connected successfully");
         String loginQuery = "SELECT id, password FROM master.dbo.[user] WHERE username = ?";
+        Map<String, String> response = new HashMap<>();
+
+        // Regex patterns
+        String usernamePattern = "^[a-zA-Z0-9_]{3,16}$";
+        String passwordPattern = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$";
+
+        // Validate fields using regex
+        if (!loginInfo.getUsername().matches(usernamePattern)) {
+            response.put("message", "Invalid username.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+
+        if (!loginInfo.getPassword().matches(passwordPattern)) {
+            response.put("message", "Invalid password.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
 
         // Hash the password
         String hashedPassword = encodePassword(loginInfo.getPassword());
@@ -38,7 +54,6 @@ public class LoginController {
             ps.setString(1, loginInfo.getUsername());
 
             try (ResultSet rs = ps.executeQuery()) {
-                Map<String, String> response = new HashMap<>();
                 if (rs.next()) {
                     String storedPasswordHash = rs.getString("password");
                     if (hashedPassword.equals(storedPasswordHash)) {

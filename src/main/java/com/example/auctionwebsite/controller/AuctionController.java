@@ -21,6 +21,16 @@ public class AuctionController {
     public ResponseEntity<Map<String, String>> createAuctionRoom(@RequestBody AuctionRoom auctionRoom, @RequestParam("ownerId") String ownerId) {
         auctionRoom.setOwnerId(ownerId);
         Map<String, String> response = new HashMap<>();
+
+        // Regex pattern to validate room name
+        String namePattern = "^[A-Za-z0-9\\s]{1,100}$";
+
+        // Validate room name using regex
+        if (!auctionRoom.getName().matches(namePattern)) {
+            response.put("message", "Room Name should be 1-100 characters long and can contain letters, numbers, and spaces.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+
         String checkRoomExistsQuery = "SELECT COUNT(*) FROM master.dbo.[auctionRoom] WHERE ownerId = ? AND name = ?";
 
         try (Connection conn = dataSource.getConnection()) {

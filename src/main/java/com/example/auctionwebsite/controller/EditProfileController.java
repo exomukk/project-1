@@ -35,6 +35,36 @@ public class EditProfileController {
         StringBuilder updateQuery = new StringBuilder("UPDATE master.dbo.[user] SET ");
         boolean firstField = true;
 
+        // Define regex patterns
+        String usernamePattern = "^[a-zA-Z0-9_]{3,16}$";
+        String passwordPattern = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$";
+        String phonePattern = "^\\+?[0-9]{10,15}$";
+        String addressPattern = "^.{5,100}$";
+
+        Map<String, String> response = new HashMap<>();
+
+        // Validate fields using regex
+        if (editProfileInfo.getUsername() != null && !editProfileInfo.getUsername().isEmpty() && !editProfileInfo.getUsername().matches(usernamePattern)) {
+            response.put("message", "Invalid username format.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+
+        if (editProfileInfo.getPassword() != null && !editProfileInfo.getPassword().isEmpty() && !editProfileInfo.getPassword().matches(passwordPattern)) {
+            response.put("message", "Invalid password format.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+
+        if (editProfileInfo.getPhone() != null && !editProfileInfo.getPhone().isEmpty() && !editProfileInfo.getPhone().matches(phonePattern)) {
+            response.put("message", "Invalid phone number format.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+
+        if (editProfileInfo.getAddress() != null && !editProfileInfo.getAddress().isEmpty() && !editProfileInfo.getAddress().matches(addressPattern)) {
+            response.put("message", "Invalid address format.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+
+        // Continue with update query construction and execution
         if (editProfileInfo.getUsername() != null && !editProfileInfo.getUsername().isEmpty()) {
             updateQuery.append("username = ?");
             firstField = false;
@@ -75,7 +105,6 @@ public class EditProfileController {
 
             int rowsUpdated = ps.executeUpdate();
 
-            Map<String, String> response = new HashMap<>();
             if (rowsUpdated > 0) {
                 response.put("message", "Changed success");
                 return ResponseEntity.status(HttpStatus.OK).body(response);

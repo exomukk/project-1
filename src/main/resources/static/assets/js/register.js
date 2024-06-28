@@ -1,1 +1,37 @@
-'use strict';(function(_0x395df5,_0x3a2339){const _0x29dff2=_0x4b5a,_0x21ce93=_0x395df5();while(!![]){try{const _0x19831b=parseInt(_0x29dff2(0x1f9))/0x1+-parseInt(_0x29dff2(0x1ee))/0x2+-parseInt(_0x29dff2(0x201))/0x3+parseInt(_0x29dff2(0x205))/0x4+parseInt(_0x29dff2(0x1f6))/0x5*(parseInt(_0x29dff2(0x1fd))/0x6)+-parseInt(_0x29dff2(0x206))/0x7+-parseInt(_0x29dff2(0x1fc))/0x8*(-parseInt(_0x29dff2(0x1f1))/0x9);if(_0x19831b===_0x3a2339)break;else _0x21ce93['push'](_0x21ce93['shift']());}catch(_0x230d84){_0x21ce93['push'](_0x21ce93['shift']());}}}(_0x387b,0x77981));async function submitForm(){const _0x2cac90=_0x4b5a,_0x3aa918=document[_0x2cac90(0x1fe)](_0x2cac90(0x202))[0x0]['value'],_0x39a74c=document[_0x2cac90(0x1fe)](_0x2cac90(0x1f7))[0x0]['value'],_0x15940c=document[_0x2cac90(0x1fe)](_0x2cac90(0x204))[0x0][_0x2cac90(0x1f3)],_0x2a9deb=document[_0x2cac90(0x1fe)]('address')[0x0]['value'];try{const _0xc0adf9=await fetch(_0x2cac90(0x1ef),{'method':_0x2cac90(0x1ff),'headers':{'Content-Type':'application/json'},'body':JSON[_0x2cac90(0x200)]({'username':_0x3aa918,'password':_0x39a74c,'phone':_0x15940c,'address':_0x2a9deb})});if(_0xc0adf9[_0x2cac90(0x1fa)]===0xc8){const _0x17af64=await _0xc0adf9[_0x2cac90(0x1f8)]();alert(_0x17af64['message']),localStorage[_0x2cac90(0x203)]('userId',''+_0x17af64['userId']),window[_0x2cac90(0x1f0)][_0x2cac90(0x207)]='index.html?id='+_0x17af64[_0x2cac90(0x1f5)];}else{const _0x5a6b81=await _0xc0adf9[_0x2cac90(0x1f8)]();alert(_0x5a6b81[_0x2cac90(0x1f4)]||_0x2cac90(0x1fb));}}catch(_0x5dc7c3){console['error'](_0x2cac90(0x1f2),_0x5dc7c3),alert('An\x20error\x20occurred.\x20Please\x20try\x20again.');}}function _0x4b5a(_0x431d27,_0x44135e){const _0x387b03=_0x387b();return _0x4b5a=function(_0x4b5a24,_0x549ab7){_0x4b5a24=_0x4b5a24-0x1ee;let _0x5109c4=_0x387b03[_0x4b5a24];return _0x5109c4;},_0x4b5a(_0x431d27,_0x44135e);}function _0x387b(){const _0x237da6=['/register.app','location','36HXlyTF','Error\x20during\x20login\x20request:','value','message','userId','1315oOJVbC','password','json','470713fXaMdS','status','An\x20unknown\x20error\x20occurred.','2673712kBvqsD','7236NMWDBb','getElementsByClassName','POST','stringify','1626309QiHPWn','username','setItem','phone','410264wLfaIt','4898544ZZjvNL','href','991122icdQwS'];_0x387b=function(){return _0x237da6;};return _0x387b();}
+'use strict';
+
+async function submitForm() {
+    const username = document.getElementsByClassName("username")[0].value;
+    const password = document.getElementsByClassName("password")[0].value;
+    const phone = document.getElementsByClassName("phone")[0].value;
+    const address = document.getElementsByClassName("address")[0].value;
+
+    try {
+        const response = await fetch('/register.app', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username: username,
+                password: password,
+                phone: phone,
+                address: address
+            })
+        });
+
+        if (response.status === 200) {
+            const data = await response.json();
+
+            alert(data.message);
+            localStorage.setItem('userId', `${data.userId}`); // Add user ID to local storage for future usage
+            window.location.href = `index.html?id=${data.userId}`;
+        } else {
+            const data = await response.json();
+            alert(data.message || 'An unknown error occurred.');
+        }
+    } catch (error) {
+        console.error('Error during login request:', error);
+        alert('An error occurred. Please try again.');
+    }
+}

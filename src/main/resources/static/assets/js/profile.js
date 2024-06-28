@@ -1,1 +1,142 @@
-'use strict';function _0x45f7(_0x1dc9d1,_0x41f75f){const _0x10dcd5=_0x10dc();return _0x45f7=function(_0x45f7ef,_0x44ad0e){_0x45f7ef=_0x45f7ef-0xd7;let _0x4bab17=_0x10dcd5[_0x45f7ef];return _0x4bab17;},_0x45f7(_0x1dc9d1,_0x41f75f);}const _0x3fb0b5=_0x45f7;(function(_0x1d1ee4,_0x517935){const _0xac7e71=_0x45f7,_0x34615f=_0x1d1ee4();while(!![]){try{const _0x14c744=parseInt(_0xac7e71(0xf4))/0x1+-parseInt(_0xac7e71(0xd7))/0x2*(parseInt(_0xac7e71(0xe1))/0x3)+parseInt(_0xac7e71(0x103))/0x4*(parseInt(_0xac7e71(0xdf))/0x5)+parseInt(_0xac7e71(0xfc))/0x6*(-parseInt(_0xac7e71(0x102))/0x7)+-parseInt(_0xac7e71(0xdb))/0x8+-parseInt(_0xac7e71(0xec))/0x9+parseInt(_0xac7e71(0xef))/0xa;if(_0x14c744===_0x517935)break;else _0x34615f['push'](_0x34615f['shift']());}catch(_0x2ad663){_0x34615f['push'](_0x34615f['shift']());}}}(_0x10dc,0xb4185));const headerLogo=document[_0x3fb0b5(0xe4)]('header-logo'),userId=localStorage[_0x3fb0b5(0xe2)](_0x3fb0b5(0xfe)),notificationToast=document[_0x3fb0b5(0x104)](_0x3fb0b5(0xeb)),toastCloseBtn=document[_0x3fb0b5(0x104)](_0x3fb0b5(0xfa));toastCloseBtn[_0x3fb0b5(0x101)]('click',function(){const _0x36b8b6=_0x3fb0b5;notificationToast[_0x36b8b6(0xe9)][_0x36b8b6(0xea)](_0x36b8b6(0xf6));});async function submitForm(){const _0x5d6e33=_0x3fb0b5,_0x23b0f7=localStorage[_0x5d6e33(0xe2)](_0x5d6e33(0xfe)),_0x15818b=document[_0x5d6e33(0xe4)](_0x5d6e33(0xdc))[0x0][_0x5d6e33(0xe6)],_0x4298c2=document['getElementsByClassName']('password')[0x0]['value'],_0x17029b=document['getElementsByClassName'](_0x5d6e33(0xe0))[0x0][_0x5d6e33(0xe6)],_0x5c48bc=document['getElementsByClassName'](_0x5d6e33(0xde))[0x0][_0x5d6e33(0xe6)];try{const _0x185df8=await fetch(_0x5d6e33(0xfb),{'method':_0x5d6e33(0xd9),'headers':{'Content-Type':_0x5d6e33(0xdd)},'body':JSON['stringify']({'id':_0x23b0f7,'username':_0x15818b,'password':_0x4298c2,'address':_0x17029b,'phone':_0x5c48bc})});if(_0x185df8[_0x5d6e33(0xe3)]===0xc8)try{const _0x2d87fc=await _0x185df8[_0x5d6e33(0xff)]();alert(_0x2d87fc[_0x5d6e33(0xf7)]),console[_0x5d6e33(0xd8)](_0x2d87fc[_0x5d6e33(0xf7)]);}catch(_0x42c946){console[_0x5d6e33(0xf9)]('Error\x20parsing\x20JSON:',_0x42c946),alert(_0x5d6e33(0xf1));}else{const _0xf1cc8f=await _0x185df8[_0x5d6e33(0xf2)]();console[_0x5d6e33(0xd8)](_0xf1cc8f),alert(_0x5d6e33(0xed)+_0xf1cc8f);}}catch(_0x4eba82){console['error']('Network\x20error\x20during\x20edit\x20request:',_0x4eba82),alert(_0x5d6e33(0xf3));}}async function fetchItems(){const _0x5c0a86=_0x3fb0b5;try{const _0x2adb96=await fetch('/profile?userId='+userId);if(_0x2adb96['ok']){const _0x119514=await _0x2adb96[_0x5c0a86(0xff)](),_0x57f8ea=document[_0x5c0a86(0x104)](_0x5c0a86(0xda));_0x57f8ea[_0x5c0a86(0x100)]=_0x119514[_0x5c0a86(0xdc)];}else console['error']('Error\x20fetching\x20user:',_0x2adb96['status']);}catch(_0xb5964d){console['error'](_0x5c0a86(0xf8),_0xb5964d);}}document[_0x3fb0b5(0x101)](_0x3fb0b5(0xe7),fetchItems);function createRoom(){const _0xa3bef=_0x3fb0b5;window[_0xa3bef(0xe5)][_0xa3bef(0xf0)]=_0xa3bef(0xe8)+userId;}function createItem(){const _0x58eeda=_0x3fb0b5;window[_0x58eeda(0xe5)][_0x58eeda(0xf0)]='add_item.html?id='+userId;}function deleteRoom(){const _0x16d653=_0x3fb0b5;window[_0x16d653(0xe5)][_0x16d653(0xf0)]='delete_room.html?id='+userId;}function deleteItem(){const _0x2cf130=_0x3fb0b5;window[_0x2cf130(0xe5)]['href']=_0x2cf130(0xee)+userId;}function _0x10dc(){const _0x217b58=['44BfRHhg','log','POST','.username','11164384GJGITU','username','application/json','phone','193065pDsulZ','address','98511rvcJoL','getItem','status','getElementsByClassName','location','value','DOMContentLoaded','add_room.html?id=','classList','add','[data-toast]','518121bZDPnq','An\x20error\x20occurred:\x20','delete_item.html?id=','25135280ohXTWC','href','The\x20server\x20response\x20is\x20not\x20in\x20JSON\x20format.','text','A\x20network\x20error\x20occurred.\x20Please\x20try\x20again.','138287ADVDKE','click','closed','message','Error\x20during\x20fetch\x20request:','error','[data-toast-close]','/editprofile.app','14352cYUhkN','length','userId','json','placeholder','addEventListener','3416lTNldI','148RCUrQV','querySelector'];_0x10dc=function(){return _0x217b58;};return _0x10dc();}const returnHomepage=function(){const _0x334bd9=_0x3fb0b5,_0x10209e=localStorage['getItem'](_0x334bd9(0xfe));window[_0x334bd9(0xe5)][_0x334bd9(0xf0)]='index.html?id='+_0x10209e;};let i;for(i=0x0;i<headerLogo[_0x3fb0b5(0xfd)];i++){headerLogo[i][_0x3fb0b5(0x101)](_0x3fb0b5(0xf5),returnHomepage,![]);}
+'use strict';
+
+const headerLogo = document.getElementsByClassName('header-logo');
+const userId = localStorage.getItem('userId');
+
+
+
+
+
+// Submit form functions
+async function submitForm() {
+    const userId = localStorage.getItem('userId');
+    const username = document.getElementsByClassName("username")[0].value;
+    const password = document.getElementsByClassName("password")[0].value;
+    const address = document.getElementsByClassName("address")[0].value;
+    const phone = document.getElementsByClassName("phone")[0].value;
+
+    try {
+        const response = await fetch('/editprofile.app', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                id: userId,
+                username: username,
+                password: password,
+                address: address,
+                phone: phone
+            })
+        });
+
+        // Check if the response status code is 200 (OK)
+        if (response.status === 200) {
+            try {
+                const data = await response.json();
+                alert(data.message);
+                window.location.href = `profile.html?id=${localStorage.getItem('userId')}`;
+            } catch (jsonError) {
+                console.error('Error parsing JSON:', jsonError);
+                alert('The server response is not in JSON format.');
+            }
+        } else {
+            const textData = await response.text();
+            console.log(textData);
+            alert('An error occurred: ' + textData);
+        }
+    } catch (networkError) {
+        console.error('Network error during edit request:', networkError);
+        alert('A network error occurred. Please try again.');
+    }
+}
+
+
+
+
+
+// Fetch username from database to frontend
+async function fetchItems() {
+    try {
+        const response = await fetch(`/profile?userId=${userId}`);
+        if (response.ok) {
+            const user = await response.json();
+            const usernameField = document.querySelector('.username');
+            usernameField.placeholder = user.username; // update placeholder to username
+        } else {
+            console.error('Error fetching user:', response.status);
+        }
+    } catch (error) {
+        console.error('Error during fetch request:', error);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', fetchItems);
+
+
+
+
+
+// btn functions
+function createRoom() {
+    window.location.href = `add_room.html?id=${userId}`;
+}
+
+function createItem() {
+    window.location.href = `add_item.html?id=${userId}`;
+}
+
+function deleteRoom() {
+    window.location.href = `delete_room.html?id=${userId}`;
+}
+
+function deleteItem() {
+    window.location.href = `delete_item.html?id=${userId}`;
+}
+
+
+
+
+
+// Insert url to return to homepage with user ID
+const returnHomepage = function () {
+    const userId = localStorage.getItem('userId');
+    window.location.href = `index.html?id=${userId}`;
+};
+
+let i;
+for (i = 0; i < headerLogo.length; i++) {
+    headerLogo[i].addEventListener('click', returnHomepage, false);
+}
+
+
+
+
+
+// // Dropdown function for login logout
+// document.addEventListener('DOMContentLoaded', function () {
+//   // get userID conditions
+//   const userId = localStorage.getItem('userId');
+//   if (userId) {
+//     document.getElementById('login-link').style.display = 'none';
+//     document.getElementById('register-link').style.display = 'none';
+//     document.getElementById('logout-link').style.display = 'block';
+//     document.getElementById('profile-link').style.display = 'block';
+//     document.getElementById('room-link').style.display = 'block';
+//   }
+// });
+//
+// function toggleDropdown() {
+//   const dropdown = document.getElementById('dropdown-content-header');
+//   dropdown.style.visibility = dropdown.style.visibility === 'hidden' ? 'visible' : 'hidden';
+// }
+//
+// function logout() {
+//   localStorage.removeItem('userId');
+//   window.location.href = `index.html`;
+// }
+//
+// function editProfile() {
+//   const userId = localStorage.getItem('userId');
+//   window.location.href = `profile.html?id=${userId}`;
+// }

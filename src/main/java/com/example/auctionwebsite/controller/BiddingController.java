@@ -51,8 +51,18 @@ public class BiddingController {
     @PostMapping("/bid/{id}")
     public ResponseEntity<Map<String, String>> bid(@PathVariable String id, @RequestBody Map<String, Object> bidInfo) {
         Map<String, String> response = new HashMap<>();
-        double bidPrice = Double.parseDouble(bidInfo.get("bidPrice").toString());
+        String bidPriceStr = bidInfo.get("bidPrice").toString();
         String highestBidder = bidInfo.get("highestBidder").toString();
+        double bidPrice = Double.parseDouble(bidPriceStr);
+
+        // Regex pattern to validate bid amount (positive number with up to 2 decimal places)
+        String bidPattern = "^\\d+(\\.\\d{1,2})?$";
+
+        // Validate bid amount using regex
+        if (!bidPriceStr.matches(bidPattern)) {
+            response.put("message", "Invalid bid amount. Please enter a valid number.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
 
         String selectQuery = "SELECT bid_price FROM master.dbo.[items] WHERE id = ?";
         String updateQuery = "UPDATE master.dbo.[items] SET bid_price = ?, highestBidder = ? WHERE id = ?";
